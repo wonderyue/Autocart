@@ -3,7 +3,7 @@ from rest_framework import generics
 from Backend import models
 
 
-class UserSerializer(generics.ListCreateAPIView):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = (

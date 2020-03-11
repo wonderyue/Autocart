@@ -3,7 +3,7 @@ from Backend.models import User
 from Backend.serializers import UserSerializer
 
 
-class UserViewSet(generics.ListCreateAPIView, mixins.UpdateModelMixin):
+class UserViewSet(viewsets.ModelViewSet):
     """get/post/update"""
     queryset = User.objects.all()
     serializer_class = UserSerializer
