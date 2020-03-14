@@ -4,7 +4,15 @@
 
 ```
 pip3 install pipenv
-pipenv --three //or pipenv --python 3.8
+# or pipenv --python 3.8
+pipenv --three
 pipenv shell
-pipenv install 
+# backend dependencies
+pipenv install
+# frontend dependencies 
+npm install
+# run serve on localhost:8000
+python Autocart/manage.py runserver
+# run webpack for dev, 'npm run build' for production
+npm run dev
 ```
