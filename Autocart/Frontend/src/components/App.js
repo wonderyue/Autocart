@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import ItemCard from "./ItemCard";
 
 class App extends Component {
   state = {};
@@ -8,4 +9,4 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(<ItemCard />, document.getElementById("app"));
