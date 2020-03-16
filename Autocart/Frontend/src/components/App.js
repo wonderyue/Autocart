@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import ItemCard from "./ItemCard";
+import ACHeader from "./ACHeader";
+import ACListView from "./ACListView";
 
 class App extends Component {
-  state = {};
   render() {
-    return <h1>Hello World</h1>;
+    return (
+      <div>
+        <ACHeader />
+        <ACListView />
+      </div>
+    );
   }
 }
 
-ReactDOM.render(<ItemCard />, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById("app"));

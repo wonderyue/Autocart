@@ -18,7 +18,12 @@ module.exports = {
       },
       {
         test: /\.(jpg|png|gif|jpeg|woff|woff2|eot|ttf|svg)$/,
-        loader: "url-loader?limit=100000"
+        loader: "url-loader",
+        options: {
+          esModule: false,
+          name: "img/[name]-[hash:8].[ext]",
+          limt: 8192
+        }
       }
     ]
   }

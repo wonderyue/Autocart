@@ -1,7 +1,7 @@
 {
   "name": "Autocart",
   "version": "1.0.0",
-  "description": "## How to run",
+  "description": "Autocart",
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development ./Autocart/Frontend/src/index.js --output ./Autocart/Frontend/static/frontend/main.js",
@@ -32,10 +32,14 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "babel-plugin-root-import": "^6.4.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-currency-format": "^1.0.0",
     "react-dom": "^16.13.0",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2"
   }
