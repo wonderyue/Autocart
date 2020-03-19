@@ -12,48 +12,51 @@ import {
   Responsive,
   Segment,
   Sidebar,
-  Visibility
+  Modal
 } from "semantic-ui-react";
-
-const getWidth = () => {
-  const isSSR = typeof window === "undefined";
-
-  return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth;
-};
+import ACLoginView from "./ACLoginView";
 
 class ACHeader extends Component {
   state = {};
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    const { fixed } = true;
+    let refAccountBtn;
     return (
-      <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
-        <Visibility once={true}>
-          <Segment
-            inverted
-            textAlign="center"
-            style={{ margin: "0em 0em 2em 0em" }}
-            vertical
-          >
-            <Menu inverted={true} pointing={true} secondary={true} size="large">
-              <Container>
-                <Menu.Item as="a" active>
-                  Home
-                </Menu.Item>
-                <Menu.Item as="a">Cars</Menu.Item>
-                <Menu.Item position="right">
-                  <Button icon="shop" color="black" />
-                  <Button
-                    icon="user circle"
-                    style={{ marginLeft: "0.5em" }}
-                    color="black"
-                  />
-                </Menu.Item>
-              </Container>
-            </Menu>
-          </Segment>
-        </Visibility>
-        {/* {children} */}
-      </Responsive>
+      <div>
+        <Menu
+          inverted
+          color="blue"
+          pointing
+          secondary
+          borderless
+          style={{ padding: "0.5em", margin: "0em 0em 2em 0em" }}
+        >
+          <Menu.Item as="a" active>
+            Home
+          </Menu.Item>
+          <Menu.Item as="a">Cars</Menu.Item>
+          <Menu.Item position="right">
+            <Button icon="shop" color="blue" />
+            <Modal
+              size="small"
+              trigger={
+                <Button
+                  ref={node => (refAccountBtn = node)}
+                  icon="user circle"
+                  style={{ marginLeft: "0.5em" }}
+                  color="blue"
+                />
+              }
+            >
+              <ACLoginView />
+            </Modal>
+          </Menu.Item>
+        </Menu>
+      </div>
     );
   }
 }

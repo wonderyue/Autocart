@@ -6,20 +6,20 @@ import CurrencyFormat from "react-currency-format";
 
 class ACItemList extends Component {
   state = {
-    list: []
+    list: this.props.list
   };
 
   componentDidMount() {
-    axios.get(`${BASE_URL}/cars`).then(res => {
-      const list = res.data.results;
-      this.setState({ list });
-    });
+    // axios.get(`${BASE_URL}/cars`).then(res => {
+    //   const list = res.data.results;
+    //   this.setState({ list });
+    // });
   }
 
   render() {
     return (
       <Item.Group divided>
-        {this.state.list.map((item, index) => (
+        {this.props.list.map((item, index) => (
           <Item key={index}>
             <Item.Image src={require("@assets/" + item.url)} size="medium" />
             <Item.Content>
