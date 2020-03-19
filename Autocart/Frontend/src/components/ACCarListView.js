@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Grid, Pagination, Button } from "semantic-ui-react";
+import { Grid, Pagination } from "semantic-ui-react";
 import ACItemList from "./ACItemList";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { getCarsList, changePage } from "@src/actions/ACCarListViewAction";
 
 class ACCarListView extends Component {
@@ -40,10 +39,6 @@ class ACCarListView extends Component {
     );
   }
 }
-
-ACCarListView.contextTypes = {
-  store: PropTypes.object
-};
 
 const mapStateToProps = state => {
   return {
