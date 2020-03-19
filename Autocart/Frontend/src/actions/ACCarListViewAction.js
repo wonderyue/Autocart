@@ -14,7 +14,6 @@ export const changePage = activePage => (dispatch, getState) => {
     type: CHANGE_PAGE,
     payload: activePage
   });
-  dispatch(getCarsList(getState().CarList.countPerPage, activePage));
 };
 
 export const getCarsList = (countPerPage, curPage) => (dispatch, getState) => {
