@@ -1,12 +1,39 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import ItemCard from "./ItemCard";
+import ACHeader from "./ACHeader";
+import ACFooter from "./ACFooter";
+import ACCarListView from "./ACCarListView";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import combineReducers from "../reducers";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+const initialState = {};
+
+const middleware = [thunk];
+
+const store = createStore(
+  combineReducers,
+  initialState,
+  composeWithDevTools(applyMiddleware(...middleware))
+);
 
 class App extends Component {
-  state = {};
   render() {
-    return <h1>Hello World</h1>;
+    return (
+      <div>
+        <ACHeader />
+        <ACCarListView />
+        <ACFooter />
+      </div>
+    );
   }
 }
 
-ReactDOM.render(<ItemCard />, document.getElementById("app"));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("app")
+);

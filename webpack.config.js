@@ -1,3 +1,4 @@
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 module.exports = {
   module: {
     rules: [
@@ -17,9 +18,22 @@ module.exports = {
         loader: "sass-loader!style-loader!css-loader"
       },
       {
-        test: /\.(jpg|png|gif|jpeg|woff|woff2|eot|ttf|svg)$/,
-        loader: "url-loader?limit=100000"
+        test: /\.(jpg|png|gif|jpeg|woff|woff2|eot|ttf|svg|ico)$/,
+        loader: "url-loader",
+        options: {
+          esModule: false,
+          name: "img/[name]-[hash:8].[ext]",
+          limt: 8192
+        }
       }
     ]
-  }
+  },
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: "./Autocart/Frontend/assets/favicon.ico",
+        to: "./img"
+      }
+    ])
+  ]
 };

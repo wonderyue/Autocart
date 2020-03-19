@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework import generics
 from Backend import models
 
 
@@ -16,3 +15,9 @@ class UserSerializer(serializers.ModelSerializer):
             'name',
             'c_time',
         )
+
+
+class CarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Car
+        exclude = ('update_time',)

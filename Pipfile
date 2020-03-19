@@ -13,6 +13,7 @@ mysql-python = "*"
 python3-8-dev = "*"
 python3-dev = "*"
 libmysqlclient-dev = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.8"
