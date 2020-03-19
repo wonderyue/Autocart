@@ -10,8 +10,10 @@ class ACCarListView extends Component {
     this.props.getCarsList(this.props.countPerPage, this.props.curPage);
   }
 
-  componentDidUpdate() {
-    this.props.getCarsList(this.props.countPerPage, this.props.curPage);
+  componentDidUpdate(prevProps) {
+    if (prevProps.curPage !== this.props.curPage) {
+      this.props.getCarsList(this.props.countPerPage, this.props.curPage);
+    }
   }
 
   handlePageChange = (e, { activePage }) => {
