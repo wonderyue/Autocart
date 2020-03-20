@@ -35,5 +35,6 @@ module.exports = {
         to: "./img"
       }
     ])
-  ]
+  ],
+  watch: true
 };
