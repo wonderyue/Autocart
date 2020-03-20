@@ -8,12 +8,8 @@ verify_ssl = true
 [packages]
 django = "*"
 djangorestframework = "*"
-mysqlclient = "*"
-mysql-python = "*"
-python3-8-dev = "*"
-python3-dev = "*"
-libmysqlclient-dev = "*"
 django-filter = "*"
+djangorestframework-simplejwt = "*"
 
 [requires]
 python_version = "3.8"
