@@ -21,7 +21,7 @@ class ACCarListView extends Component {
 
   render() {
     return (
-      <Grid>
+      <Grid style={{ margin: "1em 0em 1em 0em" }}>
         <Grid.Column width={4}></Grid.Column>
         <Grid.Column width={8} style={{ maxWidth: 600, padding: "1em 0em" }}>
           <ACItemList list={this.props.list} />

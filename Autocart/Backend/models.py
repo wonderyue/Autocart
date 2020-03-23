@@ -1,18 +1,18 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.contrib.auth.hashers import make_password
 
 
-class User(models.Model):
-
-    name = models.CharField(max_length=16, unique=True)
-    password = models.CharField(max_length=32)
-    c_time = models.DateTimeField(auto_now_add=True)
+class User(AbstractUser):
+    first_name = None
+    last_name = None
+    img = models.CharField(max_length=32, default='avatars/1.png')
 
     def __str__(self):
-        return self.name
+        return self.username
 
-    class Meta:
-        ordering = ['c_time']
+    class Meta(AbstractUser.Meta):
+        pass
 
 
 class Car(models.Model):
@@ -36,10 +36,6 @@ class Car(models.Model):
 
     def __str__(self):
         return self.name
-
-    @property
-    def full_name(self):
-        return '%s %s' % (self.year, self.name)
 
     class Meta:
         ordering = ['id']

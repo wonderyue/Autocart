@@ -1,5 +1,5 @@
 import axios from "axios";
-import { responseMessage } from "./Messages";
+import { responseMessage } from "./ACMessagesAction";
 
 import {
   BASE_URL,
@@ -17,7 +17,7 @@ export const changePage = activePage => (dispatch, getState) => {
 };
 
 export const getCarsList = (countPerPage, curPage) => (dispatch, getState) => {
-  var offset = countPerPage * (curPage - 1);
+  const offset = countPerPage * (curPage - 1);
   axios
     .get(`${BASE_URL}/cars?limit=${countPerPage}&offset=${offset}`)
     .then(res => {

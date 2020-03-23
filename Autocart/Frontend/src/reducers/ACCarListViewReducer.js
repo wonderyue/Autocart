@@ -4,7 +4,7 @@ const initState = {
   count: 0,
   list: [],
   curPage: 1,
-  countPerPage: 1
+  countPerPage: 10
 };
 
 export default function(state = initState, action) {

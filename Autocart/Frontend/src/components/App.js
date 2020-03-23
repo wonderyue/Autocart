@@ -1,13 +1,14 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
 import ACHeader from "./ACHeader";
 import ACFooter from "./ACFooter";
 import ACHomeView from "./ACHomeView";
 import ACCarListView from "./ACCarListView";
 import ACCarDetailView from "./ACCarDetailView";
-import ACLoginView from "./ACLoginView";
 import ACCartView from "./ACCartView";
 import ACHistoryView from "./ACHistoryView";
+import ACLoginView from "./ACLoginView";
+import ACSignupView from "./ACSignupView";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
@@ -17,10 +18,9 @@ import {
   HashRouter as Router,
   Route,
   Switch,
-  Redirect,
-  Link
+  useLocation
 } from "react-router-dom";
-import { Container, Segment } from "semantic-ui-react";
+import { Segment } from "semantic-ui-react";
 
 const initialState = {};
 
@@ -32,30 +32,31 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(...middleware))
 );
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <ACHeader />
-        <Segment style={{ minHeight: "90vh" }}>
-          <Switch>
-            <Route exact path="/" component={ACHomeView} />
-            <Route exact path="/cars" component={ACCarListView} />
-            <Route exact path="/login" component={ACLoginView} />
-            <Route exact path="/cart" component={ACCartView} />
-            <Route exact path="/history" component={ACHistoryView} />
-            <Route path="/cars/:id" component={ACCarDetailView} />
-          </Switch>
-        </Segment>
-        <ACFooter />
-      </Router>
-    );
-  }
+function App() {
+  let location = useLocation();
+  let background = location.state && location.state.background;
+  return (
+    <Fragment>
+      <ACHeader />
+      <Segment style={{ minHeight: "85vh" }}>
+        <Switch location={background || location}>
+          <Route exact path="/" component={ACHomeView} />
+          <Route exact path="/cars" component={ACCarListView} />
+          <Route exact path="/cart" component={ACCartView} />
+          <Route exact path="/history" component={ACHistoryView} />
+          <Route path="/cars/:id" component={ACCarDetailView} />
+        </Switch>
+      </Segment>
+      <ACFooter />
+    </Fragment>
+  );
 }
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>,
   document.getElementById("app")
 );

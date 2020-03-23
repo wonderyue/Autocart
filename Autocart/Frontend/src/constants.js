@@ -1,6 +1,15 @@
 export const BASE_URL = "http://localhost:8000";
+export const ACCESS_TOKEN = "AC_ACCESS_TOKEN";
+export const REFRESH_TOKEN = "AC_REFRESH_TOKEN";
+export const USER_ID = "AC_USER_ID";
 export const GET_CARS_LIST = "GET_CARS_LIST";
 export const UPDATE_CAR = "UPDATE_CAR";
 export const CREATE_CAR = "CREATE_CAR";
 export const CHANGE_PAGE = "CHANGE_PAGE";
 export const MESSAGE = "MESSAGE";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const LOGOUT = "LOGOUT";
+export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
+export const SIGN_UP_FAIL = "SIGN_UP_FAIL";
+export const GET_USER = "GET_USER";
