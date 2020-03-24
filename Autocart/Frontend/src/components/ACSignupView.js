@@ -17,12 +17,6 @@ import { signup, signupFail } from "@src/actions/ACAuthAction";
 class ACSignuoView extends Component {
   state = { img: "avatars/1.png" };
 
-  componentDidUpdate(prevProps) {
-    if (this.props.isAuthenticated) {
-      this.props.history.goBack();
-    }
-  }
-
   handleSubmit = e => {
     e.preventDefault();
     if (this.state.password !== this.state.password2) {
@@ -53,7 +47,6 @@ class ACSignuoView extends Component {
     ) : null;
     const location = this.props.location;
     const background = location.state && location.state.background;
-
     let avatars = [];
     for (var i = 1; i <= 8; i++) {
       let img = "avatars/" + i + ".png";
@@ -113,7 +106,7 @@ class ACSignuoView extends Component {
             <Link
               to={{
                 pathname: "/login",
-                state: { background: background || location }
+                state: { background: background }
               }}
             >
               Log in

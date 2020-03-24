@@ -15,12 +15,6 @@ import { login } from "@src/actions/ACAuthAction";
 class ACLoginView extends Component {
   state = {};
 
-  componentDidUpdate(prevProps) {
-    if (this.props.isAuthenticated) {
-      this.props.history.goBack();
-    }
-  }
-
   handleSubmit = e => {
     e.preventDefault();
     this.props.login(this.state.username, this.state.password);
@@ -43,7 +37,6 @@ class ACLoginView extends Component {
     ) : null;
     const location = this.props.location;
     const background = location.state && location.state.background;
-
     return (
       <Grid textAlign="center" style={{ margin: "5em" }} verticalAlign="middle">
         <Grid.Column style={{ maxWidth: 450 }}>
@@ -79,7 +72,7 @@ class ACLoginView extends Component {
             <Link
               to={{
                 pathname: "/signup",
-                state: { background: background || location }
+                state: { background: background }
               }}
             >
               Sign up

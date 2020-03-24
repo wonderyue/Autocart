@@ -2,43 +2,32 @@ import React, { Component, Fragment } from "react";
 import { Button, Menu, Modal, Dropdown, Image } from "semantic-ui-react";
 import ACLoginView from "./ACLoginView";
 import ACSignupView from "./ACSignupView";
-import {
-  Link,
-  HashRouter as Router,
-  Route,
-  Switch,
-  withRouter
-} from "react-router-dom";
+import { NavLink, Link, Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout, getUser } from "@src/actions/ACAuthAction";
-import { USER_ID } from "@src/constants";
 
 class ACHeader extends Component {
-  state = { activeItem: "home", isModalOpen: false };
+  state = {};
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated && !this.props.auth.username) {
       this.props.getUser(this.props.auth.userid);
     }
   }
-
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.auth.isAuthenticated !== this.props.auth.isAuthenticated &&
-      this.props.auth.isAuthenticated
-    ) {
-      this.setState({ isModalOpen: false });
+  // back to the background of ModalView after successful login or signup
+  componentWillUpdate(nextProps) {
+    if (nextProps.auth.isAuthenticated && !this.props.auth.isAuthenticated) {
+      const location = this.props.location;
+      const background = location.state && location.state.background;
+      this.props.history.push(background.pathname);
     }
   }
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   handleLogout = () => {
     this.props.logout();
   };
 
   render() {
-    const { activeItem } = this.state;
     const { isAuthenticated } = this.props.auth;
     const username = this.props.auth.username || "guest";
     const avatar = this.props.auth.img ? (
@@ -49,9 +38,8 @@ class ACHeader extends Component {
       />
     ) : null;
 
-    let location = this.props.location;
-    let background = location.state && location.state.background;
-
+    const location = this.props.location;
+    const background = location.state && location.state.background;
     const guest = (
       <Modal
         trigger={
@@ -66,9 +54,16 @@ class ACHeader extends Component {
             color="blue"
           />
         }
+        onClose={() => {
+          this.props.history.push(background.pathname);
+        }}
       >
-        {background && <Route exact path="/login" component={ACLoginView} />}
-        {background && <Route exact path="/signup" component={ACSignupView} />}
+        {background && (
+          <Switch>
+            <Route exact path="/login" component={ACLoginView} />
+            <Route exact path="/signup" component={ACSignupView} />
+          </Switch>
+        )}
       </Modal>
     );
 
@@ -93,25 +88,12 @@ class ACHeader extends Component {
           color="blue"
           pointing
           secondary
-          borderless
           style={{ padding: "0.5em", margin: "0em 0em 2em 0em" }}
         >
-          <Menu.Item
-            as={Link}
-            to="/"
-            name="home"
-            active={activeItem === "home"}
-            onClick={this.handleItemClick}
-          >
+          <Menu.Item as={NavLink} to="/" name="home" exact>
             Home
           </Menu.Item>
-          <Menu.Item
-            as={Link}
-            to="/cars"
-            name="cars"
-            active={activeItem === "cars"}
-            onClick={this.handleItemClick}
-          >
+          <Menu.Item as={NavLink} to="/cars" name="cars">
             Cars
           </Menu.Item>
           <Menu.Item position="right">
