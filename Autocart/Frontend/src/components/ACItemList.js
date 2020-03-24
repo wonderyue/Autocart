@@ -15,7 +15,7 @@ class ACItemList extends Component {
       <Item.Group divided>
         {this.props.list.map((item, index) => (
           <Item key={index}>
-            <Item.Image src={require("@assets/" + item.url)} size="medium" />
+            <Item.Image src={require("@assets/" + item.img)} size="medium" />
             <Item.Content>
               <Item.Header as="a">{item.year + " " + item.name}</Item.Header>
               <Item.Meta>

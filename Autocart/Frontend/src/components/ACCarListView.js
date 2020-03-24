@@ -17,6 +17,7 @@ class ACCarListView extends Component {
 
   handlePageChange = (e, { activePage }) => {
     this.props.changePage(activePage);
+    window.scroll({ top: 0, left: 0 /*behavior: 'smooth'*/ });
   };
 
   render() {

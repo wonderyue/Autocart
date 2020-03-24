@@ -59,4 +59,4 @@ class LoginSerializer(TokenObtainPairSerializer):
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
-        exclude = ('update_time',)
+        fields = ('__all__')

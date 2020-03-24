@@ -84,7 +84,6 @@ class ACLoginView extends Component {
             >
               Sign up
             </Link>
-            {this.state.username ? <Redirect to="/cars" /> : null}
           </Message>
           {MessageBox}
         </Grid.Column>
