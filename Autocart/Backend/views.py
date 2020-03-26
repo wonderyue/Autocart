@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from rest_framework import generics, viewsets, permissions, mixins, filters, pagination, response
-from Backend.models import User, Car
-from Backend.serializers import UserSerializer, LoginSerializer, CarSerializer
+from Backend.models import User, Car, Cart
+from Backend.serializers import UserSerializer, LoginSerializer, CarSerializer, CartSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_simplejwt.views import TokenObtainPairView
 import django_filters
@@ -56,7 +56,6 @@ class CarViewSet(mixins.CreateModelMixin,
                  mixins.UpdateModelMixin,
                  mixins.ListModelMixin,
                  viewsets.GenericViewSet):
-
     queryset = Car.objects.all()
     serializer_class = CarSerializer
     pagination_class = CarListPagination
@@ -66,3 +65,14 @@ class CarViewSet(mixins.CreateModelMixin,
     filter_class = CarFilter
     search_fields = ['name', 'model', 'brand']
     ordering_fields = ['name', 'year', 'price']
+
+
+class CartViewSet(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def list(self, request):
+        queryset = Cart.objects.all().filter(user=self.request.user)
+        serializer = CartSerializer(queryset, many=True)
+        return response.Response(serializer.data)

@@ -7,7 +7,8 @@ import {
   LOGOUT,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAIL,
-  GET_USER
+  GET_USER,
+  GET_CART
 } from "@src/constants";
 
 export const login = (username, password) => (dispatch, getState) => {
@@ -36,7 +37,7 @@ export const getUser = userid => (dispatch, getState) => {
       dispatch({ type: GET_USER, payload: res.data });
     })
     .catch(err => {
-      // dispatch({ type: LOGIN_FAIL, payload: err });
+      alert(err);
     });
 };
 
@@ -60,11 +61,22 @@ export const signupFail = msg => (dispatch, getState) => {
   });
 };
 
+export const getCart = () => (dispatch, getState) => {
+  axios
+    .get(`${BASE_URL}/carts/`, tokenConfig(getState))
+    .then(res => {
+      dispatch({ type: GET_CART, payload: res.data });
+    })
+    .catch(err => {
+      alert(err);
+    });
+};
+
 export const tokenConfig = getState => {
   const token = getState().Auth.token;
   const config = { headers: { "Content-Type": "application/json" } };
   if (token) {
-    config.headers["Authorization"] = `Token ${token}`;
+    config.headers["Authorization"] = `JWT ${token}`;
   }
   return config;
 };

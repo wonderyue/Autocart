@@ -224,10 +224,10 @@ class ACCarListView extends Component {
         </Grid.Column>
         <Grid.Column
           width={12}
-          style={{ minWidth: "50em", padding: "1em 0em" }}
+          style={{ minWidth: "50em", maxWidth: "60em", padding: "1em 0em" }}
         >
-          <Grid>
-            <Grid.Column width={10}>
+          <Grid columns={3}>
+            <Grid.Column textAlign="left" verticalAlign="middle">
               <Input
                 action={{
                   icon: "search",
@@ -240,7 +240,10 @@ class ACCarListView extends Component {
                 onBlur={this.handleSearchCHange}
               />
             </Grid.Column>
-            <Grid.Column width={4} floated="right">
+            <Grid.Column textAlign="center" verticalAlign="middle">
+              <p style={{ fontSize: "2em" }}>{this.props.count} Found</p>
+            </Grid.Column>
+            <Grid.Column textAlign="right" verticalAlign="middle">
               <Icon name="sort amount down" />
               Sort by:{" "}
               <Dropdown
@@ -255,12 +258,14 @@ class ACCarListView extends Component {
           </Grid>
           <Divider />
           <ACItemList list={this.props.list} />
+          <Divider />
           <Grid className="center aligned">
             <Pagination
               activePage={this.props.curPage}
               totalPages={this.props.count / this.props.countPerPage}
               onPageChange={this.handlePageChange}
               className="ui pagination menu centered"
+              style={{ marginTop: "2em" }}
             />
           </Grid>
         </Grid.Column>

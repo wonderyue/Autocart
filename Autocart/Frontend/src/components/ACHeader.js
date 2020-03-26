@@ -34,7 +34,7 @@ class ACHeader extends Component {
       <Image
         avatar
         src={require("@assets/" + this.props.auth.img)}
-        style={{ margin: "0em 0.5em 0em 0.5em", fontSize: "16" }}
+        style={{ margin: "0em 0.5em 0em 0.5em", fontSize: "1em" }}
       />
     ) : null;
 
@@ -88,7 +88,11 @@ class ACHeader extends Component {
           color="blue"
           pointing
           secondary
-          style={{ padding: "0.5em", margin: "0em 0em 2em 0em" }}
+          style={{
+            padding: "0.5em",
+            marginBottom: "2em",
+            color: "blue"
+          }}
         >
           <Menu.Item as={NavLink} to="/" name="home" exact>
             Home

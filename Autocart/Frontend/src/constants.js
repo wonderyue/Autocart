@@ -19,3 +19,4 @@ export const LOGOUT = "LOGOUT";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const SIGN_UP_FAIL = "SIGN_UP_FAIL";
 export const GET_USER = "GET_USER";
+export const GET_CART = "GET_CART";

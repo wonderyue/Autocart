@@ -25,11 +25,11 @@ class ACItemList extends Component {
                 <Grid>
                   <Grid.Column floated="left" width={8}>
                     <p>Horsepower</p>
-                    <p style={{ fontSize: "16px", color: "black" }}>
+                    <p style={{ fontSize: "1.2em", color: "black" }}>
                       {item.horsepower}
                     </p>
                     <p>Combined Fuel Economy</p>
-                    <p style={{ fontSize: "16px", color: "black" }}>
+                    <p style={{ fontSize: "1.2em", color: "black" }}>
                       {item.mpg} MPG
                     </p>
                   </Grid.Column>
