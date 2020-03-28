@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import password_validation
 from Backend.models import User, Car, Cart
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -19,6 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super(UserSerializer, self).__init__(*args, **kwargs)
         request = kwargs['context']['request']
+        '''only register response contains token'''
         if request.method != 'POST':
             self.fields.pop('token')
 
@@ -44,6 +45,9 @@ class LoginSerializer(TokenObtainPairSerializer):
             username=attrs['username'], password=attrs['password'])
         if user is not None:
             data = {'token': super().validate(attrs)}
+            refresh = self.get_token(user)
+            data['token']['exp'] = refresh.access_token.payload['exp']
+            data['token']['refreshExp'] = refresh.payload['exp']
             try:
                 for key in UserSerializer.Meta.fields:
                     if key != 'token' and key != 'password':
@@ -54,6 +58,15 @@ class LoginSerializer(TokenObtainPairSerializer):
         else:
             raise serializers.ValidationError(
                 'Incorrect username or password')
+
+
+class CustomTokenRefreshSerializer(TokenRefreshSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = RefreshToken(attrs['refresh'])
+        data['exp'] = refresh.access_token.payload['exp']
+        data['refreshExp'] = refresh.payload['exp']
+        return data
 
 
 class CarSerializer(serializers.ModelSerializer):

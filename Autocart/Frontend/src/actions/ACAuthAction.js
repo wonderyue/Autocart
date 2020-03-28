@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import {
   BASE_URL,
   LOGIN_SUCCESS,
@@ -10,6 +9,8 @@ import {
   GET_USER,
   GET_CART
 } from "@src/constants";
+import { clientRequestWithToken } from "../wrapper/axioWrapper";
+import { asynActionWithToken } from "./actionHelper";
 
 export const login = (username, password) => (dispatch, getState) => {
   const config = { headers: { "Content-Type": "application/json" } };
@@ -30,16 +31,15 @@ export const logout = () => (dispatch, getState) => {
   });
 };
 
-export const getUser = userid => (dispatch, getState) => {
-  axios
-    .get(`${BASE_URL}/users/${userid}`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: GET_USER, payload: res.data });
+export const getUser = userid =>
+  asynActionWithToken((dispatch, getState) =>
+    clientRequestWithToken({
+      method: "get",
+      url: "/users/" + userid
+    }).then(res => {
+      dispatch({ type: GET_USER, payload: res });
     })
-    .catch(err => {
-      alert(err);
-    });
-};
+  );
 
 export const signup = (username, password, img) => (dispatch, getState) => {
   const config = { headers: { "Content-Type": "application/json" } };
@@ -59,17 +59,6 @@ export const signupFail = msg => (dispatch, getState) => {
     type: SIGN_UP_FAIL,
     payload: msg
   });
-};
-
-export const getCart = () => (dispatch, getState) => {
-  axios
-    .get(`${BASE_URL}/carts/`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: GET_CART, payload: res.data });
-    })
-    .catch(err => {
-      alert(err);
-    });
 };
 
 export const tokenConfig = getState => {

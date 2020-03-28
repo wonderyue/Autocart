@@ -1,20 +1,24 @@
 from django.contrib.auth import authenticate, login
 from rest_framework import generics, viewsets, permissions, mixins, filters, pagination, response
 from Backend.models import User, Car, Cart
-from Backend.serializers import UserSerializer, LoginSerializer, CarSerializer, CartSerializer
+from Backend.serializers import UserSerializer, LoginSerializer, CarSerializer, CartSerializer, CustomTokenRefreshSerializer
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 import django_filters
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class LoginView(TokenObtainPairView):
     serializer_class = LoginSerializer
+
+
+class CustomTokenRefreshView(TokenRefreshView):
+    serializer_class = CustomTokenRefreshSerializer
 
 
 class CarListPagination(pagination.LimitOffsetPagination):

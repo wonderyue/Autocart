@@ -1,7 +1,11 @@
 export const BASE_URL = "http://localhost:8000";
 export const ACCESS_TOKEN = "AC_ACCESS_TOKEN";
 export const REFRESH_TOKEN = "AC_REFRESH_TOKEN";
+export const ACCESS_EXPIRE = "AC_ACCESS_EXPIRE";
+export const REFRESH_EXPIRE = "AC_REFRESH_EXPIRE";
 export const USER_ID = "AC_USER_ID";
+export const SET_TOKEN = "SET_TOKEN";
+export const NEED_LOGIN = "NEED_LOGIN";
 export const GET_CARS_LIST = "GET_CARS_LIST";
 export const UPDATE_CAR = "UPDATE_CAR";
 export const CREATE_CAR = "CREATE_CAR";

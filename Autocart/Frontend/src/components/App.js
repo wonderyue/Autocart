@@ -21,10 +21,11 @@ import {
   useLocation
 } from "react-router-dom";
 import { Segment } from "semantic-ui-react";
+import { requestMiddleware } from "@src/middleware/requestMiddleware";
 
 const initialState = {};
 
-const middleware = [thunk];
+const middleware = [requestMiddleware, thunk];
 
 const store = createStore(
   combineReducers,
