@@ -9,7 +9,7 @@ import {
   GET_USER,
   GET_CART
 } from "@src/constants";
-import { clientRequestWithToken } from "../wrapper/axioWrapper";
+import { clientRequestWithToken } from "../utils/axioWrapper";
 import { asynActionWithToken } from "./actionHelper";
 
 export const login = (username, password) => (dispatch, getState) => {

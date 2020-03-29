@@ -109,7 +109,7 @@ const categoryOptions = [
 class ACCarListView extends Component {
   componentDidMount() {
     this.props.getOnePage(
-      "cars/",
+      "/cars/",
       false,
       this.props.countPerPage,
       this.props.curPage,
@@ -124,7 +124,7 @@ class ACCarListView extends Component {
       !compareObject(prevProps.filters, this.props.filters)
     ) {
       this.props.getOnePage(
-        "cars/",
+        "/cars/",
         false,
         this.props.countPerPage,
         this.props.curPage,

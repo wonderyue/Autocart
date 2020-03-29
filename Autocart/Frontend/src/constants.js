@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:8000/";
+export const BASE_URL = "http://localhost:8000";
 export const ACCESS_TOKEN = "AC_ACCESS_TOKEN";
 export const REFRESH_TOKEN = "AC_REFRESH_TOKEN";
 export const ACCESS_EXPIRE = "AC_ACCESS_EXPIRE";
