@@ -32,6 +32,8 @@ class UserSerializer(serializers.ModelSerializer):
         self.refresh = RefreshToken.for_user(user)
         return user
 
+    '''for SerializeMethodField'''
+
     def get_token(self, obj):
         data = {}
         data["refresh"] = str(self.refresh)
@@ -76,6 +78,21 @@ class CarSerializer(serializers.ModelSerializer):
 
 
 class CartSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField(read_only=True)
+    img = serializers.SerializerMethodField(read_only=True)
+    price = serializers.SerializerMethodField(read_only=True)
+
+    '''for SerializeMethodField'''
+
+    def get_name(self, obj):
+        return Car.fullname(obj.car)
+
+    def get_img(self, obj):
+        return obj.car.img
+
+    def get_price(self, obj):
+        return obj.car.price
+
     class Meta:
         model = Cart
-        fields = ('__all__')
+        fields = ('id', 'name', 'img', 'price', 'amount', 'saveForLater')

@@ -26,6 +26,8 @@ export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const SIGN_UP_FAIL = "SIGN_UP_FAIL";
 export const GET_USER = "GET_USER";
 export const GET_CART = "GET_CART";
+export const UPDATE_CART = "UPDATE_CART";
+export const DELETE_CART = "DELETE_CART";
 
 export const TYPE_2_PROP = {
   [CHANGE_PAGE]: "curPage",

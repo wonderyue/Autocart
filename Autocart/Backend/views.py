@@ -5,6 +5,7 @@ from Backend.serializers import UserSerializer, LoginSerializer, CarSerializer, 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 import django_filters
+from Backend.utils import CommaSeparatedValueFilter, DestroyWithPayloadMixin
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -25,18 +26,6 @@ class CarListPagination(pagination.LimitOffsetPagination):
     page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 100
-
-
-class CommaSeparatedValueFilter(django_filters.CharFilter):
-    """Accept comma separated string as value and convert it to list.
-    It's useful for __in lookups.
-    """
-
-    def filter(self, qs, value):
-        if value:
-            value = value.split(',')
-
-        return super(CommaSeparatedValueFilter, self).filter(qs, value)
 
 
 class CarFilter(django_filters.FilterSet):
@@ -71,7 +60,7 @@ class CarViewSet(mixins.CreateModelMixin,
     ordering_fields = ['name', 'year', 'price']
 
 
-class CartViewSet(viewsets.ModelViewSet):
+class CartViewSet(DestroyWithPayloadMixin, viewsets.ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
     permission_classes = [permissions.IsAuthenticated]

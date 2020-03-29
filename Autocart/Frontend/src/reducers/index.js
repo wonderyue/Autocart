@@ -1,5 +1,6 @@
 import Auth from "./ACAuthReducer";
 import Pagination from "./PaginationReducer";
+import Cart from "./ACCartReducer";
 import { combineReducers } from "redux";
 
 export default combineReducers({
@@ -17,5 +18,6 @@ export default combineReducers({
       price__gte: "",
       price__lte: ""
     }
-  })
+  }),
+  Cart
 });

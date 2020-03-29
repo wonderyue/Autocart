@@ -49,6 +49,9 @@ class Car(models.Model):
     def __str__(self):
         return self.name
 
+    def fullname(self):
+        return '{} {} {} {}'.format(self.year, self.brand, self.name, self.model)
+
     class Meta:
         ordering = ['id']
 
