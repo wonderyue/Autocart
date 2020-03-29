@@ -4,24 +4,23 @@ import {
   Pagination,
   Dropdown,
   Icon,
-  Menu,
   Divider,
   Segment,
-  Input,
-  Button
+  Input
 } from "semantic-ui-react";
 import ACItemList from "./ACItemList";
 import { connect } from "react-redux";
+import PaginationAction from "@src/actions/PaginationAction";
 import {
-  getCarsList,
-  changePage,
-  changeOrder,
-  changeBrand,
-  changeCategory,
-  changeSearch,
-  changeMinPrice,
-  changeMaxPrice
-} from "@src/actions/ACCarListViewAction";
+  CHANGE_PAGE,
+  CHANGE_ORDER,
+  CHANGE_BRAND,
+  CHANGE_CATEGORY,
+  CHANGE_SEARCH,
+  CHANGE_MIN_PRICE,
+  CHANGE_MAX_PRICE
+} from "@src/constants";
+import { compareObject } from "@src/utils/util";
 
 const sortOptions = [
   {
@@ -109,68 +108,58 @@ const categoryOptions = [
 
 class ACCarListView extends Component {
   componentDidMount() {
-    this.props.getCarsList(
+    this.props.getOnePage(
+      "cars/",
+      false,
       this.props.countPerPage,
       this.props.curPage,
-      this.props.orderBy,
-      this.props.brand,
-      this.props.category,
-      this.props.search,
-      this.props.minPrice,
-      this.props.maxPrice
+      this.props.filters
     );
   }
 
   componentDidUpdate(prevProps) {
     if (
       prevProps.curPage !== this.props.curPage ||
-      prevProps.orderBy !== this.props.orderBy ||
-      prevProps.brand !== this.props.brand ||
-      prevProps.category !== this.props.category ||
-      prevProps.search !== this.props.search ||
-      prevProps.minPrice !== this.props.minPrice ||
-      prevProps.maxPrice !== this.props.maxPrice
+      prevProps.countPerPage !== this.props.countPerPage ||
+      !compareObject(prevProps.filters, this.props.filters)
     ) {
-      this.props.getCarsList(
+      this.props.getOnePage(
+        "cars/",
+        false,
         this.props.countPerPage,
         this.props.curPage,
-        this.props.orderBy,
-        this.props.brand,
-        this.props.category,
-        this.props.search,
-        this.props.minPrice,
-        this.props.maxPrice
+        this.props.filters
       );
     }
   }
 
   handlePageChange = (e, { activePage }) => {
-    this.props.changePage(activePage);
+    this.props.changeParam(CHANGE_PAGE, activePage);
     window.scroll({ top: 0, left: 0 /*behavior: 'smooth'*/ });
   };
 
   handleOrderChange = (e, { value }) => {
-    this.props.changeOrder(value);
+    this.props.changeParam(CHANGE_ORDER, value);
   };
 
   handleBrandChange = (e, { value }) => {
-    this.props.changeBrand(value);
+    this.props.changeParam(CHANGE_BRAND, value);
   };
 
   handleCategoryChange = (e, { value }) => {
-    this.props.changeCategory(value);
+    this.props.changeParam(CHANGE_CATEGORY, value);
   };
 
-  handleSearchCHange = () => {
-    this.props.changeSearch(this.state.search);
+  handleSearchChange = () => {
+    this.props.changeParam(CHANGE_SEARCH, this.state.search);
   };
 
   handleMinPriceChange = () => {
-    this.props.changeMinPrice(this.state.minPrice);
+    this.props.changeParam(CHANGE_MIN_PRICE, this.state.price__gte);
   };
 
   handleMaxPriceChange = () => {
-    this.props.changeMaxPrice(this.state.maxPrice);
+    this.props.changeParam(CHANGE_MAX_PRICE, this.state.price__lte);
   };
 
   render() {
@@ -181,7 +170,7 @@ class ACCarListView extends Component {
             <p>Price Range</p>
             <Input
               onChange={e => {
-                this.setState({ minPrice: e.target.value });
+                this.setState({ price__gte: e.target.value });
               }}
               onBlur={this.handleMinPriceChange}
               type="number"
@@ -190,7 +179,7 @@ class ACCarListView extends Component {
             to{" "}
             <Input
               onChange={e => {
-                this.setState({ maxPrice: e.target.value });
+                this.setState({ price__lte: e.target.value });
               }}
               onBlur={this.handleMaxPriceChange}
               type="number"
@@ -205,7 +194,7 @@ class ACCarListView extends Component {
               fluid
               multiple
               closeOnChange
-              value={this.props.brand}
+              value={this.props.filters.brand}
               onChange={this.handleBrandChange}
             />
             <Divider />
@@ -217,7 +206,7 @@ class ACCarListView extends Component {
               fluid
               multiple
               closeOnChange
-              value={this.props.category}
+              value={this.props.filters.category}
               onChange={this.handleCategoryChange}
             />
           </Segment>
@@ -231,13 +220,13 @@ class ACCarListView extends Component {
               <Input
                 action={{
                   icon: "search",
-                  onClick: this.handleSearchCHange
+                  onClick: this.handleSearchChange
                 }}
                 placeholder="Search..."
                 onChange={e => {
                   this.setState({ search: e.target.value });
                 }}
-                onBlur={this.handleSearchCHange}
+                onBlur={this.handleSearchChange}
               />
             </Grid.Column>
             <Grid.Column textAlign="center" verticalAlign="middle">
@@ -250,7 +239,7 @@ class ACCarListView extends Component {
                 inline
                 simple
                 options={sortOptions}
-                defaultValue={this.props.orderBy}
+                defaultValue={this.props.filters.ordering}
                 position="right"
                 onChange={this.handleOrderChange}
               />
@@ -276,26 +265,11 @@ class ACCarListView extends Component {
 
 const mapStateToProps = state => {
   return {
-    list: state.CarList.list,
-    curPage: state.CarList.curPage,
-    countPerPage: state.CarList.countPerPage,
-    orderBy: state.CarList.orderBy,
-    count: state.CarList.count,
-    brand: state.CarList.brand,
-    category: state.CarList.category,
-    search: state.CarList.search,
-    minPrice: state.CarList.minPrice,
-    maxPrice: state.CarList.maxPrice
+    ...state.CarList
   };
 };
 
 export default connect(mapStateToProps, {
-  getCarsList,
-  changePage,
-  changeOrder,
-  changeBrand,
-  changeCategory,
-  changeSearch,
-  changeMinPrice,
-  changeMaxPrice
+  getOnePage: PaginationAction("CarList").getOnePage,
+  changeParam: PaginationAction("CarList").changeParam
 })(ACCarListView);

@@ -1,5 +1,5 @@
 import { SET_TOKEN, NEED_LOGIN } from "@src/constants";
-import { clientRequest } from "@src/wrapper/axioWrapper";
+import { clientRequest } from "@src/utils/axioWrapper";
 
 const THRESHOLD = 5;
 
