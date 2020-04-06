@@ -8,16 +8,17 @@ import {
   Icon,
   Message,
   Segment,
-  Card
+  Card,
 } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { signup, signupFail } from "@src/actions/ACAuthAction";
+import { MEDIA_URL } from "@src/constants";
 
 class ACSignuoView extends Component {
   state = { img: "avatars/1.png" };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.password !== this.state.password2) {
       this.props.signupFail({ password: "passwords didn't match" });
@@ -26,9 +27,9 @@ class ACSignuoView extends Component {
     this.props.signup(this.state.username, this.state.password, this.state.img);
   };
 
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
+  handleChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-  handleAvatarChange = value => {
+  handleAvatarChange = (value) => {
     this.setState({ img: value });
   };
 
@@ -49,11 +50,11 @@ class ACSignuoView extends Component {
     const background = location.state && location.state.background;
     let avatars = [];
     for (var i = 1; i <= 8; i++) {
-      let img = "avatars/" + i + ".png";
+      let img = MEDIA_URL + "avatars/" + i + ".png";
       avatars.push(
         <Card key={i} onClick={() => this.handleAvatarChange(img)}>
           <Icon.Group size="small">
-            <Image src={require("@assets/" + img)} />
+            <Image src={img} />
             {this.state.img === img ? <Icon corner name="check" /> : null}
           </Icon.Group>
         </Card>
@@ -64,7 +65,7 @@ class ACSignuoView extends Component {
       <Grid textAlign="center" style={{ margin: "5em" }} verticalAlign="middle">
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="blue" textAlign="center">
-            <Image src={require("@assets/icon.png")} /> SIGN UP
+            <Image src={MEDIA_URL + "icon.png"} /> SIGN UP
           </Header>
           <Form size="large" onSubmit={this.handleSubmit}>
             <Form.Input
@@ -106,7 +107,7 @@ class ACSignuoView extends Component {
             <Link
               to={{
                 pathname: "/login",
-                state: { background: background }
+                state: { background: background },
               }}
             >
               Log in
@@ -119,9 +120,9 @@ class ACSignuoView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAuthenticated: state.Auth.isAuthenticated,
-  errorMsg: state.Auth.errorMsg
+  errorMsg: state.Auth.errorMsg,
 });
 
 export default withRouter(

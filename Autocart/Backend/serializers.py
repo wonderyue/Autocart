@@ -88,7 +88,7 @@ class CartSerializer(serializers.ModelSerializer):
         return Car.fullname(obj.car)
 
     def get_img(self, obj):
-        return obj.car.img
+        return obj.car.img.url
 
     def get_price(self, obj):
         return obj.car.price

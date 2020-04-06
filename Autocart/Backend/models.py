@@ -41,7 +41,7 @@ class Car(models.Model):
     vin = models.CharField(max_length=64, blank=True)
     mileage = models.IntegerField(default=50)
     expertRating = models.IntegerField(default=3)
-    img = models.CharField(max_length=64, default="cars/1.png")
+    img = models.ImageField(upload_to='cars/', default="cars/1.png")
     detailImgs = models.CharField(max_length=256, default="cars/1.png")
     enable = models.BooleanField(default=True)
     priority = models.IntegerField(default=1)

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 class ACItemList extends Component {
   state = {
-    list: this.props.list
+    list: this.props.list,
   };
 
   componentDidMount() {}
@@ -15,7 +15,7 @@ class ACItemList extends Component {
       <Item.Group divided>
         {this.props.list.map((item, index) => (
           <Item key={index}>
-            <Item.Image src={require("@assets/" + item.img)} size="medium" />
+            <Item.Image src={item.img} size="medium" />
             <Item.Content>
               <Item.Header as="a">
                 {item.year + " " + item.name + " " + item.model}

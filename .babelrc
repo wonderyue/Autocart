@@ -7,10 +7,6 @@
       {
         "paths": [
           {
-            "rootPathPrefix": "@assets",
-            "rootPathSuffix": "Autocart/Frontend/assets"
-          },
-          {
             "rootPathPrefix": "@src",
             "rootPathSuffix": "Autocart/Frontend/src"
           }

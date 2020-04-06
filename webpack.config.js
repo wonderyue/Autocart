@@ -6,16 +6,16 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        loader: "style-loader!css-loader",
       },
       {
         test: /\.s[a|c]ss$/,
-        loader: "sass-loader!style-loader!css-loader"
+        loader: "sass-loader!style-loader!css-loader",
       },
       {
         test: /\.(jpg|png|gif|jpeg|woff|woff2|eot|ttf|svg|ico)$/,
@@ -23,18 +23,18 @@ module.exports = {
         options: {
           esModule: false,
           name: "img/[name]-[hash:8].[ext]",
-          limt: 8192
-        }
-      }
-    ]
+          limt: 8192,
+        },
+      },
+    ],
   },
   plugins: [
     new CopyWebpackPlugin([
       {
-        from: "./Autocart/Frontend/assets/favicon.ico",
-        to: "./img"
-      }
-    ])
+        from: "./Autocart/media/favicon.ico",
+        to: "./img",
+      },
+    ]),
   ],
-  watch: true
+  watch: true,
 };

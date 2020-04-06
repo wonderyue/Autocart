@@ -5,6 +5,7 @@ import ACSignupView from "./ACSignupView";
 import { NavLink, Link, Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout, getUser } from "@src/actions/ACAuthAction";
+import { MEDIA_URL } from "@src/constants";
 
 class ACHeader extends Component {
   state = {};
@@ -33,7 +34,7 @@ class ACHeader extends Component {
     const avatar = this.props.auth.img ? (
       <Image
         avatar
-        src={require("@assets/" + this.props.auth.img)}
+        src={MEDIA_URL + "/" + this.props.auth.img}
         style={{ margin: "0em 0.5em 0em 0.5em", fontSize: "1em" }}
       />
     ) : null;
@@ -47,7 +48,7 @@ class ACHeader extends Component {
             as={Link}
             to={{
               pathname: "/login",
-              state: { background: this.props.location }
+              state: { background: this.props.location },
             }}
             icon="user circle"
             style={{ marginLeft: "0.5em" }}
@@ -91,7 +92,7 @@ class ACHeader extends Component {
           style={{
             padding: "0.5em",
             marginBottom: "2em",
-            color: "blue"
+            color: "blue",
           }}
         >
           <Menu.Item as={NavLink} to="/" name="home" exact>
@@ -110,8 +111,8 @@ class ACHeader extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.Auth
+const mapStateToProps = (state) => ({
+  auth: state.Auth,
 });
 
 export default withRouter(

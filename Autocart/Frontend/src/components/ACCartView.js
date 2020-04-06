@@ -10,7 +10,7 @@ import {
   Divider,
   GridColumn,
   Label,
-  Dropdown
+  Dropdown,
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import CurrencyFormat from "react-currency-format";
@@ -33,18 +33,18 @@ class ACCartView extends Component {
     this.props.updateCart(item.id, { amount: value });
   };
 
-  handleDelete = item => {
+  handleDelete = (item) => {
     this.props.removeCart(item.id);
   };
 
-  handleSaveForLater = item => {
+  handleSaveForLater = (item) => {
     this.props.updateCart(item.id, { saveForLater: !item.saveForLater });
   };
 
-  itemComponent = item => {
+  itemComponent = (item) => {
     return (
       <Item key={item.id}>
-        <Item.Image src={require("@assets/" + item.img)} size="small" />
+        <Item.Image src={item.img} size="small" />
         <Item.Content>
           <Item.Header as="a">{item.name}</Item.Header>
           <Item.Meta>
@@ -113,7 +113,7 @@ class ACCartView extends Component {
   render() {
     let cart = [];
     let save = [];
-    this.props.list.map(item => {
+    this.props.list.map((item) => {
       if (item.saveForLater) save.push(item);
       else cart.push(item);
     });
@@ -132,14 +132,14 @@ class ACCartView extends Component {
           <Divider />
           <Segment>
             <Item.Group divided>
-              {cart.map(item => this.itemComponent(item))}
+              {cart.map((item) => this.itemComponent(item))}
             </Item.Group>
           </Segment>
           <p style={{ fontSize: "1.5em", color: "black" }}>Save For Later</p>
           <Divider />
           <Segment>
             <Item.Group divided>
-              {save.map(item => this.itemComponent(item))}
+              {save.map((item) => this.itemComponent(item))}
             </Item.Group>
           </Segment>
         </GridColumn>
@@ -148,14 +148,14 @@ class ACCartView extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    ...state.Cart
+    ...state.Cart,
   };
 };
 
 export default connect(mapStateToProps, {
   getCartList,
   updateCart,
-  removeCart
+  removeCart,
 })(ACCartView);

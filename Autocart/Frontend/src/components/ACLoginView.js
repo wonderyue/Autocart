@@ -6,21 +6,22 @@ import {
   Grid,
   Form,
   Segment,
-  Message
+  Message,
 } from "semantic-ui-react";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "@src/actions/ACAuthAction";
+import { MEDIA_URL } from "@src/constants";
 
 class ACLoginView extends Component {
   state = {};
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.login(this.state.username, this.state.password);
   };
 
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
+  handleChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   render() {
     const errorMsg = this.props.errorMsg;
@@ -41,7 +42,7 @@ class ACLoginView extends Component {
       <Grid textAlign="center" style={{ margin: "5em" }} verticalAlign="middle">
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="blue" textAlign="center">
-            <Image src={require("@assets/icon.png")} /> LOG IN
+            <Image src={MEDIA_URL + "/icon.png"} /> LOG IN
           </Header>
           <Form size="large" onSubmit={this.handleSubmit}>
             <Segment stacked>
@@ -72,7 +73,7 @@ class ACLoginView extends Component {
             <Link
               to={{
                 pathname: "/signup",
-                state: { background: background }
+                state: { background: background },
               }}
             >
               Sign up
@@ -85,9 +86,9 @@ class ACLoginView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAuthenticated: state.Auth.isAuthenticated,
-  errorMsg: state.Auth.errorMsg
+  errorMsg: state.Auth.errorMsg,
 });
 
 export default withRouter(connect(mapStateToProps, { login })(ACLoginView));
