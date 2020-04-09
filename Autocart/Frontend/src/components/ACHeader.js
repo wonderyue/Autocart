@@ -34,7 +34,7 @@ class ACHeader extends Component {
     const avatar = this.props.auth.img ? (
       <Image
         avatar
-        src={MEDIA_URL + "/" + this.props.auth.img}
+        src={MEDIA_URL + this.props.auth.img}
         style={{ margin: "0em 0.5em 0em 0.5em", fontSize: "1em" }}
       />
     ) : null;

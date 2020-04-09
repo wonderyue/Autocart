@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import {
   Grid,
   Pagination,
@@ -6,7 +6,7 @@ import {
   Icon,
   Divider,
   Segment,
-  Input
+  Input,
 } from "semantic-ui-react";
 import ACItemList from "./ACItemList";
 import { connect } from "react-redux";
@@ -18,7 +18,8 @@ import {
   CHANGE_CATEGORY,
   CHANGE_SEARCH,
   CHANGE_MIN_PRICE,
-  CHANGE_MAX_PRICE
+  CHANGE_MAX_PRICE,
+  CHANGE_ENABLE,
 } from "@src/constants";
 import { compareObject } from "@src/utils/util";
 
@@ -26,84 +27,102 @@ const sortOptions = [
   {
     key: "Newest",
     text: "Newest",
-    value: "-year"
+    value: "-year",
   },
   {
     key: "Oldest",
     text: "Oldest",
-    value: "year"
+    value: "year",
   },
   {
     key: "Lowest Price",
     text: "Lowest Price",
-    value: "price"
+    value: "price",
   },
   {
     key: "Highest Price",
     text: "Highest Price",
-    value: "-price"
-  }
+    value: "-price",
+  },
 ];
 
 const brandOptions = [
   {
     key: "Toyota",
     text: "Toyota",
-    value: "Toyota"
+    value: "Toyota",
   },
   {
     key: "Honda",
     text: "Honda",
-    value: "Honda"
+    value: "Honda",
   },
   {
     key: "Ford",
     text: "Ford",
-    value: "Ford"
+    value: "Ford",
   },
   {
     key: "Nissan",
     text: "Nissan",
-    value: "Nissan"
+    value: "Nissan",
   },
   {
     key: "Kia",
     text: "Kia",
-    value: "Kia"
+    value: "Kia",
   },
   {
     key: "Chevrolet",
     text: "Chevrolet",
-    value: "Chevrolet"
+    value: "Chevrolet",
   },
   {
     key: "Subaru",
     text: "Subaru",
-    value: "Subaru"
-  }
+    value: "Subaru",
+  },
 ];
 
 const categoryOptions = [
   {
     key: "Hatchback",
     text: "Hatchback",
-    value: "Hatchback"
+    value: "Hatchback",
   },
   {
     key: "SUV",
     text: "SUV",
-    value: "SUV"
+    value: "SUV",
   },
   {
     key: "Sedan",
     text: "Sedan",
-    value: "Sedan"
+    value: "Sedan",
   },
   {
     key: "Truck",
     text: "Truck",
-    value: "Truck"
-  }
+    value: "Truck",
+  },
+];
+
+const enableOptions = [
+  {
+    key: "Yes",
+    text: "Yes",
+    value: true,
+  },
+  {
+    key: "No",
+    text: "No",
+    value: false,
+  },
+  {
+    key: "All",
+    text: "All",
+    value: "all",
+  },
 ];
 
 class ACCarListView extends Component {
@@ -125,7 +144,7 @@ class ACCarListView extends Component {
     ) {
       this.props.getOnePage(
         "/cars/",
-        false,
+        this.props.isStaff,
         this.props.countPerPage,
         this.props.curPage,
         this.props.filters
@@ -162,6 +181,27 @@ class ACCarListView extends Component {
     this.props.changeParam(CHANGE_MAX_PRICE, this.state.price__lte);
   };
 
+  handleEnableChange = (e, { value }) => {
+    this.props.changeParam(CHANGE_ENABLE, value);
+  };
+
+  renderStaff() {
+    return (
+      <Fragment>
+        <Divider />
+        <p>For sale</p>
+        <Dropdown
+          options={enableOptions}
+          selection
+          fluid
+          closeOnChange
+          value={this.props.filters.enable}
+          onChange={this.handleEnableChange}
+        />
+      </Fragment>
+    );
+  }
+
   render() {
     return (
       <Grid style={{ margin: "1em 0em 1em 0em" }}>
@@ -169,7 +209,7 @@ class ACCarListView extends Component {
           <Segment>
             <p>Price Range</p>
             <Input
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({ price__gte: e.target.value });
               }}
               onBlur={this.handleMinPriceChange}
@@ -178,7 +218,7 @@ class ACCarListView extends Component {
             />{" "}
             to{" "}
             <Input
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({ price__lte: e.target.value });
               }}
               onBlur={this.handleMaxPriceChange}
@@ -209,6 +249,7 @@ class ACCarListView extends Component {
               value={this.props.filters.category}
               onChange={this.handleCategoryChange}
             />
+            {this.props.isStaff ? this.renderStaff() : null}
           </Segment>
         </Grid.Column>
         <Grid.Column
@@ -220,10 +261,10 @@ class ACCarListView extends Component {
               <Input
                 action={{
                   icon: "search",
-                  onClick: this.handleSearchChange
+                  onClick: this.handleSearchChange,
                 }}
                 placeholder="Search..."
-                onChange={e => {
+                onChange={(e) => {
                   this.setState({ search: e.target.value });
                 }}
                 onBlur={this.handleSearchChange}
@@ -263,13 +304,14 @@ class ACCarListView extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    ...state.CarList
+    ...state.CarList,
+    isStaff: state.Auth.isStaff,
   };
 };
 
 export default connect(mapStateToProps, {
   getOnePage: PaginationAction("CarList").getOnePage,
-  changeParam: PaginationAction("CarList").changeParam
+  changeParam: PaginationAction("CarList").changeParam,
 })(ACCarListView);

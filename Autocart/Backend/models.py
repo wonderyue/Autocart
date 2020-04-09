@@ -33,16 +33,14 @@ class Car(models.Model):
     fuelType = models.CharField(max_length=32, default="Gasoline")
     seating = models.CharField(max_length=32, default="Second Row Seating")
     drivetrain = models.CharField(max_length=32, default="FWD")
-    interiorColor = models.CharField(max_length=32, default="white")
-    exteriorColor = models.CharField(max_length=32, default="white")
+    color = models.CharField(max_length=32, default="white")
     engine = models.CharField(max_length=64, blank=True)
     transmission = models.CharField(max_length=64, blank=True)
     stockid = models.CharField(max_length=64, blank=True)
     vin = models.CharField(max_length=64, blank=True)
-    mileage = models.IntegerField(default=50)
+    mileage = models.IntegerField(blank=True)
     expertRating = models.IntegerField(default=3)
     img = models.ImageField(upload_to='cars/', default="cars/1.png")
-    detailImgs = models.CharField(max_length=256, default="cars/1.png")
     enable = models.BooleanField(default=True)
     priority = models.IntegerField(default=1)
 
@@ -68,3 +66,15 @@ class Cart(models.Model):
 
     class Meta:
         ordering = ['createTime']
+
+
+class CarImage(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    img = models.ImageField(upload_to='cars/', default="cars/1.png")
+    index = models.IntegerField()
+
+    def __str__(self):
+        return '{}_{}'.format(self.car.id, self.index)
+
+    class Meta:
+        ordering = ['index']

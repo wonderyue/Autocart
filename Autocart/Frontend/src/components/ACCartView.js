@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getCartList, updateCart, removeCart } from "@src/actions/ACCartAction";
+import {
+  getCartList,
+  updateCart,
+  removeFromCart,
+} from "@src/actions/ACCartAction";
 import {
   Button,
   Icon,
@@ -34,7 +38,7 @@ class ACCartView extends Component {
   };
 
   handleDelete = (item) => {
-    this.props.removeCart(item.id);
+    this.props.removeFromCart(item.id);
   };
 
   handleSaveForLater = (item) => {
@@ -157,5 +161,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   getCartList,
   updateCart,
-  removeCart,
+  removeFromCart,
 })(ACCartView);

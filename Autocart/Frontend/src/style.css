@@ -1,0 +1,41 @@
+.info_title {
+  font-size: 1em;
+  color: grey;
+}
+
+.info_content {
+  font-size: 1.2em;
+  color: black;
+  font-weight: bold;
+}
+
+.header_big {
+  font-size: 1.5em;
+  color: black;
+  font-weight: bold;
+}
+.header_large {
+  font-size: 2em;
+  color: black;
+  font-weight: bold;
+}
+
+.carousel .slide {
+  background-color: silver;
+}
+
+.carousel.carousel-slider .control-arrow {
+  padding: 1em;
+}
+
+.vertical_middle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.right_bottom {
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+}

@@ -1,17 +1,18 @@
 from django.contrib.auth import authenticate, login
 from rest_framework import generics, viewsets, permissions, mixins, filters, pagination, response
-from Backend.models import User, Car, Cart
-from Backend.serializers import UserSerializer, LoginSerializer, CarSerializer, CartSerializer, CustomTokenRefreshSerializer
+from Backend.models import User, Car, Cart, CarImage
+from Backend.serializers import UserSerializer, LoginSerializer, CarSerializer, CartSerializer, CustomTokenRefreshSerializer, CarImageSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 import django_filters
 from Backend.utils import CommaSeparatedValueFilter, DestroyWithPayloadMixin
+from rest_framework_simplejwt.tokens import AccessToken
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 
 class LoginView(TokenObtainPairView):
@@ -34,6 +35,13 @@ class CarFilter(django_filters.FilterSet):
     year = CommaSeparatedValueFilter(field_name='year', lookup_expr='in')
     brand = CommaSeparatedValueFilter(field_name='brand', lookup_expr='in')
 
+    def __init__(self, data, *args, **kwargs):
+        '''hide field: enable for non-staff user'''
+        if not data.get('enable'):
+            data = data.copy()
+            data['enable'] = True
+        super().__init__(data, *args, **kwargs)
+
     class Meta:
         model = Car
         fields = {
@@ -41,6 +49,7 @@ class CarFilter(django_filters.FilterSet):
             'category': ['in'],
             'year': ['in', 'lt', 'gt', 'lte', 'gte'],
             'brand': ['in'],
+            'enable': ['exact']
         }
 
 
@@ -52,7 +61,7 @@ class CarViewSet(mixins.CreateModelMixin,
     queryset = Car.objects.all()
     serializer_class = CarSerializer
     pagination_class = CarListPagination
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
     filter_class = CarFilter
@@ -69,3 +78,24 @@ class CartViewSet(DestroyWithPayloadMixin, viewsets.ModelViewSet):
         queryset = Cart.objects.all().filter(user=self.request.user)
         serializer = CartSerializer(queryset, many=True)
         return response.Response(serializer.data)
+
+    def create(self, request, *args, **kwargs):
+        request.data["user"] = request.user.id
+        return super().create(request, *args, **kwargs)
+
+    def perform_update(self, serializer):
+        '''user is readonly on update'''
+        serializer.validated_data.pop('user', None)
+        return super().perform_update(serializer)
+
+
+class CarImageViewSet(DestroyWithPayloadMixin, viewsets.ModelViewSet):
+    queryset = CarImage.objects.all()
+    serializer_class = CarImageSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = ('car',)
+
+    def perform_update(self, serializer):
+        serializer.validated_data.pop('car', None)
+        return super().perform_update(serializer)

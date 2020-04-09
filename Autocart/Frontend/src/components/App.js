@@ -18,7 +18,7 @@ import {
   HashRouter as Router,
   Route,
   Switch,
-  useLocation
+  useLocation,
 } from "react-router-dom";
 import { Segment } from "semantic-ui-react";
 import { requestMiddleware } from "@src/middleware/requestMiddleware";

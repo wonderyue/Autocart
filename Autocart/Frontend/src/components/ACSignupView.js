@@ -50,13 +50,18 @@ class ACSignuoView extends Component {
     const background = location.state && location.state.background;
     let avatars = [];
     for (var i = 1; i <= 8; i++) {
-      let img = MEDIA_URL + "avatars/" + i + ".png";
+      let img = "avatars/" + i + ".png";
       avatars.push(
         <Card key={i} onClick={() => this.handleAvatarChange(img)}>
-          <Icon.Group size="small">
-            <Image src={img} />
-            {this.state.img === img ? <Icon corner name="check" /> : null}
-          </Icon.Group>
+          <Image src={MEDIA_URL + img} size="small" />
+          {this.state.img === img ? (
+            <Icon
+              style={{ position: "absolute", bottom: "0%", right: "-4%" }}
+              name="check"
+              size="big"
+              color="blue"
+            />
+          ) : null}
         </Card>
       );
     }

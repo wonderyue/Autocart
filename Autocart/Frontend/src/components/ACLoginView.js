@@ -42,7 +42,7 @@ class ACLoginView extends Component {
       <Grid textAlign="center" style={{ margin: "5em" }} verticalAlign="middle">
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="blue" textAlign="center">
-            <Image src={MEDIA_URL + "/icon.png"} /> LOG IN
+            <Image src={MEDIA_URL + "icon.png"} /> LOG IN
           </Header>
           <Form size="large" onSubmit={this.handleSubmit}>
             <Segment stacked>

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import password_validation
-from Backend.models import User, Car, Cart
+from Backend.models import User, Car, Cart, CarImage
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import authenticate
@@ -95,4 +95,11 @@ class CartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ('id', 'name', 'img', 'price', 'amount', 'saveForLater')
+        fields = ('id', 'car', 'user', 'name', 'img',
+                  'price', 'amount', 'saveForLater')
+
+
+class CarImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarImage
+        fields = ('__all__')
