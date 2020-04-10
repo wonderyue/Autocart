@@ -11,25 +11,24 @@ const PaginationAction = (prefix) => ({
     };
   },
 
-  getOnePage: (url, withToken, countPerPage, curPage, filters) => (
-    dispatch,
-    getState
-  ) => {
-    const offset = countPerPage * (curPage - 1);
-    const request = withToken ? clientRequestWithToken : clientRequest;
-    let param = "";
-    Object.keys(filters).map((key, index) => {
-      param += `&${key}=${filters[key]}`;
-    });
-    const fun = request({
-      method: "get",
-      url: url + "?limit=" + countPerPage + "&offset=" + offset + param,
-    }).then((res) => {
-      dispatch({
-        type: addPrefix(prefix, GET_ONE_PAGE),
-        payload: res,
+  getOnePage: (url, withToken, countPerPage, curPage, filters) => {
+    let fun = (dispatch, getState) => {
+      const offset = countPerPage * (curPage - 1);
+      const request = withToken ? clientRequestWithToken : clientRequest;
+      let param = "";
+      Object.keys(filters).map((key, index) => {
+        param += `&${key}=${filters[key]}`;
       });
-    });
+      request({
+        method: "get",
+        url: url + "?limit=" + countPerPage + "&offset=" + offset + param,
+      }).then((res) => {
+        dispatch({
+          type: addPrefix(prefix, GET_ONE_PAGE),
+          payload: res,
+        });
+      });
+    };
     return withToken ? asynActionWithToken(fun) : fun;
   },
 });

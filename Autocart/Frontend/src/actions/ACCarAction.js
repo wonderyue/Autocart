@@ -10,16 +10,20 @@ import {
 } from "@src/constants";
 import { asynActionWithToken } from "./actionHelper";
 
-export const getCar = (id, isStaff) => (dispatch, getState) => {
-  clientRequest({
-    method: "get",
-    url: "/cars/" + id + "/" + (isStaff ? "?enable=all" : ""),
-  }).then((res) => {
-    dispatch({
-      type: GET_CAR,
-      payload: res,
+export const getCar = (id, isStaff) => {
+  const request = isStaff ? clientRequestWithToken : clientRequest;
+  let fun = (dispatch, getState) => {
+    request({
+      method: "get",
+      url: "/cars/" + id,
+    }).then((res) => {
+      dispatch({
+        type: GET_CAR,
+        payload: res,
+      });
     });
-  });
+  };
+  return isStaff ? asynActionWithToken(fun) : fun;
 };
 
 export const updateCar = (id, obj) =>
@@ -32,7 +36,7 @@ export const updateCar = (id, obj) =>
     }
     clientRequestWithToken({
       method: "patch",
-      url: `/cars/${id}/?enable=all`,
+      url: `/cars/${id}`,
       data: formData,
     }).then((res) => {
       dispatch({

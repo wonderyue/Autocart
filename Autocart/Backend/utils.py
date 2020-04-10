@@ -31,3 +31,33 @@ class ExtraFieldMixin(object):
             return expanded_fields + self.Meta.extra_fields
         else:
             return expanded_fields
+
+
+class ListFilterByUserMixin:
+    """
+    List a queryset filter by request.user. 
+    For permissions.IsAuthenticated 
+    """
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(
+            self.get_queryset().filter(user=self.request.user))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return response.Response(serializer.data)
+
+
+class CreateByUserMixin:
+    """
+    Auto fill user field with request.user.id
+    For permissions.IsAuthenticated 
+    """
+
+    def create(self, request, *args, **kwargs):
+        request.data["user"] = request.user.id
+        return super().create(request, *args, **kwargs)

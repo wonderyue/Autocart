@@ -129,7 +129,7 @@ class ACCarListView extends Component {
   componentDidMount() {
     this.props.getOnePage(
       "/cars/",
-      false,
+      this.props.isStaff,
       this.props.countPerPage,
       this.props.curPage,
       this.props.filters
