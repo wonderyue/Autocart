@@ -28,13 +28,6 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new CopyWebpackPlugin([
-      {
-        from: "./Autocart/media/favicon.ico",
-        to: "./img",
-      },
-    ]),
-  ],
+  plugins: [],
   watch: true,
 };
