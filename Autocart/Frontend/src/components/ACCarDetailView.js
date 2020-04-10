@@ -177,7 +177,6 @@ class ACCarDetailView extends Component {
               onChange={(e, d) =>
                 this.handleChangeInfo(columnConfig[name], d.value)
               }
-              size="mini"
             />
           </a>
         </div>

@@ -45,7 +45,7 @@ class ACLoginView extends Component {
             <Image src={MEDIA_URL + "icon.png"} /> LOG IN
           </Header>
           <Form size="large" onSubmit={this.handleSubmit}>
-            <Segment stacked>
+            <Segment>
               <Form.Input
                 fluid
                 icon="user"

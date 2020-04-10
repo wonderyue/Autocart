@@ -73,39 +73,41 @@ class ACSignuoView extends Component {
             <Image src={MEDIA_URL + "icon.png"} /> SIGN UP
           </Header>
           <Form size="large" onSubmit={this.handleSubmit}>
-            <Form.Input
-              fluid
-              icon="user"
-              iconPosition="left"
-              placeholder="Username"
-              name="username"
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              fluid
-              icon="lock"
-              iconPosition="left"
-              placeholder="Password"
-              type="password"
-              name="password"
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              fluid
-              icon="lock"
-              iconPosition="left"
-              placeholder="Confirm Password"
-              type="password"
-              name="password2"
-              onChange={this.handleChange}
-            />
             <Segment>
-              <p style={{ color: "blue" }}>Select your avatar</p>
-              <Card.Group itemsPerRow={4}>{avatars}</Card.Group>
+              <Form.Input
+                fluid
+                icon="user"
+                iconPosition="left"
+                placeholder="Username"
+                name="username"
+                onChange={this.handleChange}
+              />
+              <Form.Input
+                fluid
+                icon="lock"
+                iconPosition="left"
+                placeholder="Password"
+                type="password"
+                name="password"
+                onChange={this.handleChange}
+              />
+              <Form.Input
+                fluid
+                icon="lock"
+                iconPosition="left"
+                placeholder="Confirm Password"
+                type="password"
+                name="password2"
+                onChange={this.handleChange}
+              />
+              <Segment>
+                <p style={{ color: "blue" }}>Select your avatar</p>
+                <Card.Group itemsPerRow={4}>{avatars}</Card.Group>
+              </Segment>
+              <Button color="blue" fluid size="large">
+                Create account
+              </Button>
             </Segment>
-            <Button color="blue" fluid size="large">
-              Create account
-            </Button>
           </Form>
           <Message>
             Already have an account?{" "}
