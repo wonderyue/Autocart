@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from django.contrib.auth import password_validation
-from Backend.models import User, Car, Cart, CarImage
+from Backend.models import User, Car, Cart, CarImage, Order, Order_Car
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from Backend.utils import ExtraFieldMixin
+from drf_writable_nested.mixins import NestedCreateMixin
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -103,3 +105,18 @@ class CarImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarImage
         fields = ('__all__')
+
+
+class OrderCarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order_Car
+        exclude = ('order',)
+
+
+class OrderSerializer(ExtraFieldMixin, NestedCreateMixin, serializers.ModelSerializer):
+    cars = OrderCarSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = ('__all__')
+        extra_fields = ['cars']

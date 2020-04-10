@@ -11,6 +11,7 @@ djangorestframework = "*"
 django-filter = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
+drf-writable-nested = "*"
 
 [requires]
 python_version = "3.8"

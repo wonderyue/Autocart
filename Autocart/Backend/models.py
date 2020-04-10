@@ -57,12 +57,12 @@ class Car(models.Model):
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    amount = models.IntegerField()
+    amount = models.IntegerField(default=1)
     saveForLater = models.BooleanField(default=False)
-    createTime = models.DateField(auto_now_add=True)
+    createTime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '{}_{}'.format(self.user.username, self.car.id)
+        return '{}_{}_{}'.format(self.id, self.user.username, self.car.id)
 
     class Meta:
         ordering = ['createTime']
@@ -74,7 +74,32 @@ class CarImage(models.Model):
     index = models.IntegerField()
 
     def __str__(self):
-        return '{}_{}'.format(self.car.id, self.index)
+        return '{}_{}_{}'.format(self.id, self.car.id, self.index)
 
     class Meta:
         ordering = ['index']
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    paid = models.BooleanField(default=False)
+    pickedUp = models.BooleanField(default=False)
+    createTime = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{}_{}'.format(self.id, self.user.username)
+
+    class Meta:
+        ordering = ['-createTime']
+
+
+class Order_Car(models.Model):
+    order = models.ForeignKey(
+        Order, related_name="cars", on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    amount = models.IntegerField(default=1)
+    total = models.IntegerField()
+    commented = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '{}_{}_{}'.format(self.id, self.order.id, self.car.id)

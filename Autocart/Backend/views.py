@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from rest_framework import generics, viewsets, permissions, mixins, filters, pagination, response
-from Backend.models import User, Car, Cart, CarImage
-from Backend.serializers import UserSerializer, LoginSerializer, CarSerializer, CartSerializer, CustomTokenRefreshSerializer, CarImageSerializer
+from Backend.models import User, Car, Cart, CarImage, Order
+from Backend.serializers import UserSerializer, LoginSerializer, CarSerializer, CartSerializer, CustomTokenRefreshSerializer, CarImageSerializer, OrderSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 import django_filters
@@ -75,7 +75,7 @@ class CartViewSet(DestroyWithPayloadMixin, viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
-        queryset = Cart.objects.all().filter(user=self.request.user)
+        queryset = Cart.objects.filter(user=self.request.user)
         serializer = CartSerializer(queryset, many=True)
         return response.Response(serializer.data)
 
@@ -99,3 +99,24 @@ class CarImageViewSet(DestroyWithPayloadMixin, viewsets.ModelViewSet):
     def perform_update(self, serializer):
         serializer.validated_data.pop('car', None)
         return super().perform_update(serializer)
+
+
+class OrderView(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(
+            self.get_queryset().filter(user=self.request.user))
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return response.Response(serializer.data)
+
+    def create(self, request, *args, **kwargs):
+        request.data["user"] = request.user.id
+        return super().create(request, *args, **kwargs)

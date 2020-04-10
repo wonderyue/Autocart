@@ -44,16 +44,10 @@ export const updateCar = (id, obj) =>
 
 export const addCar = (obj) =>
   asynActionWithToken((dispatch, getState) => {
-    let formData = new FormData();
-    for (let key in obj) {
-      if (obj[key] != null) {
-        formData.append(key, obj[key]);
-      }
-    }
     clientRequestWithToken({
       method: "post",
       url: "/cars/",
-      data: formData,
+      data: JSON.stringify(obj),
     }).then((res) => {
       dispatch({
         type: CREATE_CAR,
