@@ -28,9 +28,10 @@
   padding: 1em;
 }
 
-.vertical_middle {
+.right_center {
   position: absolute;
   top: 50%;
+  right: 0%;
   transform: translateY(-50%);
 }
 

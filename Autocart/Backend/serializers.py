@@ -108,6 +108,11 @@ class CarImageSerializer(serializers.ModelSerializer):
 
 
 class OrderCarSerializer(serializers.ModelSerializer):
+    commented = serializers.SerializerMethodField(read_only=True)
+
+    def get_commented(self, obj):
+        return False
+
     class Meta:
         model = Order_Car
         exclude = ('order',)

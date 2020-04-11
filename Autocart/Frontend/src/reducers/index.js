@@ -23,4 +23,5 @@ export default combineReducers({
   }),
   Car,
   Cart: ModelReducer("Cart"),
+  Order: ModelReducer("Order"),
 });
