@@ -14,7 +14,6 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import CurrencyFormat from "react-currency-format";
-import "@src/style.css";
 
 function quantityOptions() {
   let options = [];

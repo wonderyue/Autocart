@@ -23,7 +23,7 @@ class CustomTokenRefreshView(TokenRefreshView):
     serializer_class = CustomTokenRefreshSerializer
 
 
-class CarListPagination(pagination.LimitOffsetPagination):
+class ListPagination(pagination.LimitOffsetPagination):
     page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 100
@@ -49,7 +49,7 @@ class CarFilter(django_filters.FilterSet):
 class CarViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
-    pagination_class = CarListPagination
+    pagination_class = ListPagination
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
@@ -79,7 +79,7 @@ class CarViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.Upda
 
 
 class CartViewSet(CreateByUserMixin, ListFilterByUserMixin, DestroyWithPayloadMixin, viewsets.ModelViewSet):
-    queryset = Cart.objects.all()
+    queryset = Cart.objects.filter(order=None)
     serializer_class = CartSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -101,7 +101,28 @@ class CarImageViewSet(DestroyWithPayloadMixin, viewsets.ModelViewSet):
         return super().perform_update(serializer)
 
 
-class OrderView(CreateByUserMixin, ListFilterByUserMixin, generics.ListCreateAPIView):
+class OrderView(ListFilterByUserMixin, generics.ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = ListPagination
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = ['createTime']
+
+    def create(self, request, *args, **kwargs):
+        request.data["user"] = request.user.id
+        cartids = request.data.pop('cars', [])
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        '''update cart.order'''
+        for cartid in cartids:
+            cart = Cart.objects.get(pk=cartid)
+            cartSerializer = CartSerializer(
+                cart, data={"order": serializer.data["id"]}, partial=True)
+            cartSerializer.is_valid(raise_exception=True)
+            cartSerializer.save()
+
+        headers = self.get_success_headers(serializer.data)
+        return response.Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

@@ -101,6 +101,11 @@ class ACHeader extends Component {
           <Menu.Item as={NavLink} to="/cars" name="cars">
             Cars
           </Menu.Item>
+          {isAuthenticated ? (
+            <Menu.Item as={NavLink} to="/history" name="history">
+              Orders
+            </Menu.Item>
+          ) : null}
           <Menu.Item position="right">
             <Button as={Link} to="/cart" icon="shop" color="blue" />
             {isAuthenticated ? loggedin : guest}

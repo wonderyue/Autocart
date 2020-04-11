@@ -25,8 +25,6 @@ import { CartModelAction } from "@src/actions";
 import CurrencyFormat from "react-currency-format";
 import ACDraggableCard from "./ACDraggableCard";
 import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import "@src/style.css";
 import { CAR_URL } from "@src/constants";
 
 const leftColumn = {

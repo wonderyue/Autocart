@@ -1,12 +1,12 @@
 from rest_framework import serializers
 from django.contrib.auth import password_validation
-from Backend.models import User, Car, Cart, CarImage, Order, Order_Car
+from Backend.models import User, Car, Cart, CarImage, Order
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from Backend.utils import ExtraFieldMixin
-from drf_writable_nested.mixins import NestedCreateMixin
+import time
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -83,6 +83,7 @@ class CartSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
     img = serializers.SerializerMethodField(read_only=True)
     price = serializers.SerializerMethodField(read_only=True)
+    commented = serializers.SerializerMethodField(read_only=True)
 
     '''for SerializeMethodField'''
 
@@ -95,10 +96,13 @@ class CartSerializer(serializers.ModelSerializer):
     def get_price(self, obj):
         return obj.car.price
 
+    def get_commented(self, obj):
+        return False
+
     class Meta:
         model = Cart
         fields = ('id', 'car', 'user', 'name', 'img',
-                  'price', 'amount', 'saveForLater')
+                  'price', 'amount', 'saveForLater', 'order', 'commented')
 
 
 class CarImageSerializer(serializers.ModelSerializer):
@@ -107,21 +111,15 @@ class CarImageSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 
-class OrderCarSerializer(serializers.ModelSerializer):
-    commented = serializers.SerializerMethodField(read_only=True)
+class OrderSerializer(ExtraFieldMixin, serializers.ModelSerializer):
+    cars = CartSerializer(many=True, read_only=True)
+    time = serializers.SerializerMethodField(read_only=True)
 
-    def get_commented(self, obj):
-        return False
-
-    class Meta:
-        model = Order_Car
-        exclude = ('order',)
-
-
-class OrderSerializer(ExtraFieldMixin, NestedCreateMixin, serializers.ModelSerializer):
-    cars = OrderCarSerializer(many=True)
+    def get_time(self, obj):
+        timetuple = obj.createTime.timetuple()
+        return time.mktime(timetuple)
 
     class Meta:
         model = Order
-        fields = ('__all__')
-        extra_fields = ['cars']
+        exclude = ['createTime']
+        extra_fields = ['cars', 'time']

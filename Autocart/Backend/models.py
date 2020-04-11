@@ -54,20 +54,6 @@ class Car(models.Model):
         ordering = ['id']
 
 
-class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    amount = models.IntegerField(default=1)
-    saveForLater = models.BooleanField(default=False)
-    createTime = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return '{}_{}_{}'.format(self.id, self.user.username, self.car.id)
-
-    class Meta:
-        ordering = ['createTime']
-
-
 class CarImage(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     img = models.ImageField(upload_to='cars/', default="cars/1.png")
@@ -98,12 +84,17 @@ class Order(models.Model):
         ordering = ['-createTime']
 
 
-class Order_Car(models.Model):
-    order = models.ForeignKey(
-        Order, related_name="cars", on_delete=models.CASCADE)
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     amount = models.IntegerField(default=1)
-    total = models.IntegerField()
+    saveForLater = models.BooleanField(default=False)
+    createTime = models.DateTimeField(auto_now_add=True)
+    order = models.ForeignKey(
+        Order, related_name="cars", on_delete=models.CASCADE, blank=True, null=True, default=None)
 
     def __str__(self):
-        return '{}_{}_{}'.format(self.id, self.order.id, self.car.id)
+        return '{}_{}_{}'.format(self.id, self.user.username, self.car.id)
+
+    class Meta:
+        ordering = ['createTime']

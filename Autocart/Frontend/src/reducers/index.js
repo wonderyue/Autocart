@@ -24,4 +24,13 @@ export default combineReducers({
   Car,
   Cart: ModelReducer("Cart"),
   Order: ModelReducer("Order"),
+  OrderList: Pagination("OrderList", {
+    count: 0,
+    list: [],
+    curPage: 1,
+    countPerPage: 10,
+    filters: {
+      ordering: "-createTime",
+    },
+  }),
 });

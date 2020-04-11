@@ -15,7 +15,6 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import CurrencyFormat from "react-currency-format";
-import "@src/style.css";
 
 class ACCheckoutView extends Component {
   state = { finished: false };
@@ -38,11 +37,7 @@ class ACCheckoutView extends Component {
     obj["cars"] = [];
     this.props.cart.list.map((item) => {
       if (!item.saveForLater) {
-        obj.cars.push({
-          car: item.id,
-          amount: item.amount,
-          total: item.price * item.amount,
-        });
+        obj.cars.push(item.id);
       }
     });
     this.props.addOrder(obj);
