@@ -16,8 +16,8 @@ class ACHeader extends Component {
     }
   }
   // back to the background of ModalView after successful login or signup
-  componentWillUpdate(nextProps) {
-    if (nextProps.auth.isAuthenticated && !this.props.auth.isAuthenticated) {
+  componentDidUpdate(prevProps) {
+    if (!prevProps.auth.isAuthenticated && this.props.auth.isAuthenticated) {
       const location = this.props.location;
       const background = location.state && location.state.background;
       this.props.history.push(background.pathname);
