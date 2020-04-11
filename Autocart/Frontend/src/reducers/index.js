@@ -1,6 +1,6 @@
 import Auth from "./ACAuthReducer";
 import Pagination from "./PaginationReducer";
-import Cart from "./ACCartReducer";
+import ModelReducer from "./ModelReducer";
 import Car from "./ACCarReducer";
 import { combineReducers } from "redux";
 
@@ -22,5 +22,5 @@ export default combineReducers({
     },
   }),
   Car,
-  Cart,
+  Cart: ModelReducer("Cart"),
 });

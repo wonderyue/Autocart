@@ -21,7 +21,7 @@ import {
   addCarImage,
   removeCarImage,
 } from "@src/actions/ACCarAction";
-import { addToCart } from "@src/actions/ACCartAction";
+import { CartModelAction } from "@src/actions";
 import CurrencyFormat from "react-currency-format";
 import ACDraggableCard from "./ACDraggableCard";
 import { Carousel } from "react-responsive-carousel";
@@ -440,9 +440,9 @@ export default connect(mapStateToProps, {
   getCar,
   addCar,
   updateCar,
-  addToCart,
   getCarImages,
   updateCarImage,
   addCarImage,
   removeCarImage,
+  addToCart: CartModelAction.create,
 })(ACCarDetailView);

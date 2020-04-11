@@ -1,6 +1,8 @@
 export const BASE_URL = "http://localhost:8000";
 export const MEDIA_URL = "/media/";
 export const CAR_URL = "/cars/";
+export const CART_URL = "/carts/";
+export const ORDER_URL = "/orders/";
 export const ACCESS_TOKEN = "AC_ACCESS_TOKEN";
 export const REFRESH_TOKEN = "AC_REFRESH_TOKEN";
 export const ACCESS_EXPIRE = "AC_ACCESS_EXPIRE";
@@ -33,10 +35,12 @@ export const LOGOUT = "LOGOUT";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const SIGN_UP_FAIL = "SIGN_UP_FAIL";
 export const GET_USER = "GET_USER";
-export const GET_CART = "GET_CART";
-export const UPDATE_CART = "UPDATE_CART";
-export const DELETE_CART = "DELETE_CART";
-export const CREATE_CART = "CREATE_CART";
+
+export const CREATE_MODEL = "CREATE_MODEL";
+export const UPDATE_MODEL = "UPDATE_MODEL";
+export const RETRIEVE_MODEL = "RETRIEVE_MODEL";
+export const LIST_MODEL = "LIST_MODEL";
+export const DELETE_MODEL = "DELETE_MODEL";
 
 export const TYPE_2_PROP = {
   [CHANGE_PAGE]: "curPage",

@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  getCartList,
-  updateCart,
-  removeFromCart,
-} from "@src/actions/ACCartAction";
+import { CartModelAction } from "@src/actions";
 import {
   Button,
   Icon,
@@ -18,6 +14,7 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import CurrencyFormat from "react-currency-format";
+import "@src/style.css";
 
 function quantityOptions() {
   let options = [];
@@ -131,7 +128,7 @@ class ACCartView extends Component {
               Check Out
               <Icon name="right chevron" />
             </Button>
-            <p style={{ fontSize: "1.5em", color: "black" }}>Shopping Cart</p>
+            <p className="header_big">Shopping Cart</p>
           </Grid.Row>
           <Divider />
           <Segment>
@@ -139,7 +136,7 @@ class ACCartView extends Component {
               {cart.map((item) => this.itemComponent(item))}
             </Item.Group>
           </Segment>
-          <p style={{ fontSize: "1.5em", color: "black" }}>Save For Later</p>
+          <p className="header_big">Save For Later</p>
           <Divider />
           <Segment>
             <Item.Group divided>
@@ -159,7 +156,7 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  getCartList,
-  updateCart,
-  removeFromCart,
+  getCartList: CartModelAction.list,
+  updateCart: CartModelAction.update,
+  removeFromCart: CartModelAction.delete,
 })(ACCartView);

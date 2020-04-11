@@ -2,7 +2,7 @@ import {
   GET_ONE_PAGE,
   CHANGE_PAGE,
   CHANGE_COUNT_PER_PAGE,
-  TYPE_2_PROP
+  TYPE_2_PROP,
 } from "@src/constants";
 import { trimPrefix } from "@src/actions/actionHelper";
 
@@ -23,8 +23,15 @@ import { trimPrefix } from "@src/actions/actionHelper";
     }
   })
  */
+const defaultInitState = {
+  count: 0,
+  list: [],
+  curPage: 1,
+  countPerPage: 10,
+  filters: {},
+};
 
-const PaginationReducer = (prefix, initState) => (
+const PaginationReducer = (prefix, initState = defaultInitState) => (
   state = initState,
   action
 ) => {
@@ -33,20 +40,20 @@ const PaginationReducer = (prefix, initState) => (
     return {
       ...state,
       count: action.payload.count,
-      list: action.payload.results
+      list: action.payload.results,
     };
   } else if (type == CHANGE_PAGE || type == CHANGE_COUNT_PER_PAGE) {
     return {
       ...state,
-      [TYPE_2_PROP[type]]: action.payload
+      [TYPE_2_PROP[type]]: action.payload,
     };
   } else if (TYPE_2_PROP[type]) {
     return {
       ...state,
       filters: {
         ...state.filters,
-        [TYPE_2_PROP[type]]: action.payload
-      }
+        [TYPE_2_PROP[type]]: action.payload,
+      },
     };
   } else return state;
 };

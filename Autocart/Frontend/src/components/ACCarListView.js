@@ -10,7 +10,7 @@ import {
 } from "semantic-ui-react";
 import ACItemList from "./ACItemList";
 import { connect } from "react-redux";
-import PaginationAction from "@src/actions/PaginationAction";
+import { CarListAction } from "@src/actions";
 import {
   CHANGE_PAGE,
   CHANGE_ORDER,
@@ -128,7 +128,6 @@ const enableOptions = [
 class ACCarListView extends Component {
   componentDidMount() {
     this.props.getOnePage(
-      "/cars/",
       this.props.isStaff,
       this.props.countPerPage,
       this.props.curPage,
@@ -143,7 +142,6 @@ class ACCarListView extends Component {
       !compareObject(prevProps.filters, this.props.filters)
     ) {
       this.props.getOnePage(
-        "/cars/",
         this.props.isStaff,
         this.props.countPerPage,
         this.props.curPage,
@@ -312,6 +310,6 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  getOnePage: PaginationAction("CarList").getOnePage,
-  changeParam: PaginationAction("CarList").changeParam,
+  getOnePage: CarListAction.getOnePage,
+  changeParam: CarListAction.changeParam,
 })(ACCarListView);

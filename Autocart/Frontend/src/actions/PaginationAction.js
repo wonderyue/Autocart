@@ -3,7 +3,7 @@ import { GET_ONE_PAGE } from "@src/constants";
 import { addPrefix } from "@src/actions/actionHelper";
 import { asynActionWithToken } from "./actionHelper";
 
-const PaginationAction = (prefix) => ({
+const PaginationAction = (prefix, url) => ({
   changeParam: (type, value) => {
     return {
       type: addPrefix(prefix, type),
@@ -11,7 +11,7 @@ const PaginationAction = (prefix) => ({
     };
   },
 
-  getOnePage: (url, withToken, countPerPage, curPage, filters) => {
+  getOnePage: (withToken, countPerPage, curPage, filters) => {
     let fun = (dispatch, getState) => {
       const offset = countPerPage * (curPage - 1);
       const request = withToken ? clientRequestWithToken : clientRequest;
