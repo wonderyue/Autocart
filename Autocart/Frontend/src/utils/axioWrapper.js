@@ -3,7 +3,7 @@ import { BASE_URL, ACCESS_TOKEN } from "@src/constants";
 
 const client = axios.create({
   baseURL: BASE_URL,
-  headers: { "Content-Type": "application/json" }
+  headers: { "Content-Type": "application/json" },
 });
 
 function tokenHeader() {
@@ -15,13 +15,13 @@ function tokenHeader() {
   return headers;
 }
 
-export const clientRequest = function(options) {
-  const onSuccess = function(response) {
+export const clientRequest = function (options) {
+  const onSuccess = function (response) {
     console.debug("Request Successful!", response);
     return response.data;
   };
 
-  const onError = function(error) {
+  const onError = function (error) {
     console.error("Request Failed:", error.config);
 
     if (error.response) {
@@ -39,12 +39,10 @@ export const clientRequest = function(options) {
     return Promise.reject(error.response || error.message);
   };
 
-  return client(options)
-    .then(onSuccess)
-    .catch(onError);
+  return client(options).then(onSuccess).catch(onError);
 };
 
-export const clientRequestWithToken = function(options) {
+export const clientRequestWithToken = function (options) {
   options["headers"] = tokenHeader();
   return clientRequest(options);
 };

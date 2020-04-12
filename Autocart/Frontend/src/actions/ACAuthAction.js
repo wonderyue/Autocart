@@ -15,9 +15,13 @@ export const login = (username, password) => (dispatch, getState) =>
     method: "post",
     url: "/login/",
     data: JSON.stringify({ username, password }),
-  }).then((res) => {
-    dispatch({ type: LOGIN_SUCCESS, payload: res });
-  });
+  })
+    .then((res) => {
+      dispatch({ type: LOGIN_SUCCESS, payload: res });
+    })
+    .catch((err) => {
+      dispatch({ type: LOGIN_FAIL, payload: err.data });
+    });
 
 export const logout = () => (dispatch, getState) => {
   dispatch({
@@ -40,9 +44,13 @@ export const signup = (username, password, img) => (dispatch, getState) =>
     method: "post",
     url: "/users/",
     data: JSON.stringify({ username, password, img }),
-  }).then((res) => {
-    dispatch({ type: SIGN_UP_SUCCESS, payload: res });
-  });
+  })
+    .then((res) => {
+      dispatch({ type: SIGN_UP_SUCCESS, payload: res });
+    })
+    .catch((err) => {
+      dispatch({ type: SIGN_UP_FAIL, payload: err.data });
+    });
 
 export const signupFail = (msg) => (dispatch, getState) => {
   dispatch({
