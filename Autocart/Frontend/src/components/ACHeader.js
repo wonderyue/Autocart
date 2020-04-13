@@ -1,5 +1,12 @@
 import React, { Component, Fragment } from "react";
-import { Button, Menu, Modal, Dropdown, Image } from "semantic-ui-react";
+import {
+  Button,
+  Menu,
+  Modal,
+  Dropdown,
+  Image,
+  Segment,
+} from "semantic-ui-react";
 import ACLoginView from "./ACLoginView";
 import ACSignupView from "./ACSignupView";
 import { NavLink, Link, Route, Switch, withRouter } from "react-router-dom";
@@ -72,37 +79,58 @@ class ACHeader extends Component {
       <Fragment>
         {avatar}
         <Dropdown text={username} labeled simple className="icon">
-          <Dropdown.Menu>
-            <Dropdown.Header content={username} />
+          <Dropdown.Menu direction="left" style={{ marginTop: "1em" }}>
+            <Dropdown.Header icon="user" content={username} />
             <Dropdown.Divider />
-            <Dropdown.Item as={Link} to="/history" text="History" />
-            <Dropdown.Item text="Logout" onClick={this.handleLogout} />
+            <Dropdown.Item
+              as={Link}
+              to="/history"
+              icon="file alternate"
+              text="History"
+            />
+            <Dropdown.Item
+              icon="log out"
+              text="Logout"
+              onClick={this.handleLogout}
+            />
           </Dropdown.Menu>
         </Dropdown>
       </Fragment>
     );
 
     return (
-      <div>
-        <Menu
-          inverted
-          color="blue"
-          pointing
-          secondary
-          style={{
-            padding: "0.5em",
-            marginBottom: "2em",
-            color: "blue",
-          }}
-        >
-          <Menu.Item as={NavLink} to="/" name="home" exact>
+      <Segment inverted color="blue">
+        <Menu size="huge" pointing secondary>
+          <Menu.Item
+            as={NavLink}
+            to="/"
+            name="home"
+            exact
+            style={{
+              color: "white",
+            }}
+          >
             Home
           </Menu.Item>
-          <Menu.Item as={NavLink} to="/cars" name="cars">
+          <Menu.Item
+            as={NavLink}
+            to="/cars"
+            name="cars"
+            style={{
+              color: "white",
+            }}
+          >
             Cars
           </Menu.Item>
           {isAuthenticated ? (
-            <Menu.Item as={NavLink} to="/history" name="history">
+            <Menu.Item
+              as={NavLink}
+              to="/history"
+              name="history"
+              style={{
+                color: "white",
+              }}
+            >
               Orders
             </Menu.Item>
           ) : null}
@@ -111,7 +139,7 @@ class ACHeader extends Component {
             {isAuthenticated ? loggedin : guest}
           </Menu.Item>
         </Menu>
-      </div>
+      </Segment>
     );
   }
 }

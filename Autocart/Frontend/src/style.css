@@ -40,3 +40,22 @@
   bottom: 0%;
   right: 0%;
 }
+
+.ui.menu .item {
+  color: white;
+}
+
+.ui.secondary.pointing.menu .active.item {
+  border-color: white;
+  color: white;
+}
+
+.ui.secondary.pointing.menu .active.item:hover {
+  border-color: white;
+  color: white;
+}
+
+body ::-webkit-scrollbar-thumb {
+  border-color: white;
+  color: white;
+}
