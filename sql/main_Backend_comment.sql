@@ -1,0 +1,10 @@
+INSERT INTO Backend_comment (id, rating, comment, createTime, cart_id, user_id) VALUES (3, 1, 'SMASH!', '2020-04-12 15:28:16.289289', 4, 5);
+INSERT INTO Backend_comment (id, rating, comment, createTime, cart_id, user_id) VALUES (4, 3, 'What''s the point of owning a race car if you can''t drive it?', '2020-04-12 18:31:06.793262', 6, 6);
+INSERT INTO Backend_comment (id, rating, comment, createTime, cart_id, user_id) VALUES (5, 5, 'Is it better to be feared or respected? And I say, is it too much to ask for both? With that in mind I humbly present the crown jewel of Stark Industries’ Freedom Line. It’s the first missile system to incorporate our proprietary repulsor technology. They… say the best weapon is one you never have to fire. I respectfully disagree! I prefer the weapon you only have to fire once! That’s how dad did it! That’s how America does it! And it’s worked out pretty well so far. Find an excuse to let one of these off the chains and I personally guarantee you, the bad guys won’t even wanna come out of their caves. For your consideration: the Jericho.', '2020-04-12 18:34:25.045858', 5, 6);
+INSERT INTO Backend_comment (id, rating, comment, createTime, cart_id, user_id) VALUES (6, 2, 'I need a horse!', '2020-04-13 18:59:03.829765', 14, 4);
+INSERT INTO Backend_comment (id, rating, comment, createTime, cart_id, user_id) VALUES (7, 5, 'I can do this all day.
+(...Hail Hydra...)', '2020-04-13 19:13:13.306159', 15, 7);
+INSERT INTO Backend_comment (id, rating, comment, createTime, cart_id, user_id) VALUES (8, 5, 'Wait a minute, I know this guy. I''m gonna call him Ant-thony.', '2020-04-13 19:17:46.017262', 16, 8);
+INSERT INTO Backend_comment (id, rating, comment, createTime, cart_id, user_id) VALUES (9, 5, 'I''m always picking up after you boys.', '2020-04-13 19:23:09.166609', 17, 9);
+INSERT INTO Backend_comment (id, rating, comment, createTime, cart_id, user_id) VALUES (10, 5, 'Sweet ride.', '2020-04-13 19:28:49.888836', 18, 10);
+INSERT INTO Backend_comment (id, rating, comment, createTime, cart_id, user_id) VALUES (11, 5, 'I see better from a distance.', '2020-04-13 19:31:33.746575', 19, 11);
