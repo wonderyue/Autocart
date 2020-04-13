@@ -6,12 +6,14 @@ import {
   Dropdown,
   Image,
   Segment,
+  Icon,
 } from "semantic-ui-react";
 import ACLoginView from "./ACLoginView";
 import ACSignupView from "./ACSignupView";
 import { NavLink, Link, Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout, getUser } from "@src/actions/ACAuthAction";
+import { CartModelAction } from "@src/actions";
 import { MEDIA_URL } from "@src/constants";
 
 class ACHeader extends Component {
@@ -20,6 +22,7 @@ class ACHeader extends Component {
   componentDidMount() {
     if (this.props.auth.isAuthenticated && !this.props.auth.username) {
       this.props.getUser(this.props.auth.userid);
+      this.props.getCartList();
     }
   }
   // back to the background of ModalView after successful login or signup
@@ -42,12 +45,17 @@ class ACHeader extends Component {
       <Image
         avatar
         src={MEDIA_URL + this.props.auth.img}
-        style={{ margin: "0em 0.5em 0em 0.5em", fontSize: "1em" }}
+        style={{ margin: "0em 0.5em" }}
       />
     ) : null;
 
     const location = this.props.location;
     const background = location.state && location.state.background;
+    let cartCount = 0;
+    this.props.cart.list.map((item) => {
+      if (!item.saveForLater) cartCount++;
+    });
+
     const guest = (
       <Modal
         trigger={
@@ -78,8 +86,8 @@ class ACHeader extends Component {
     const loggedin = (
       <Fragment>
         {avatar}
-        <Dropdown text={username} labeled simple className="icon">
-          <Dropdown.Menu direction="left" style={{ marginTop: "1em" }}>
+        <Dropdown text={username} labeled floating className="icon white">
+          <Dropdown.Menu direction="left">
             <Dropdown.Header icon="user" content={username} />
             <Dropdown.Divider />
             <Dropdown.Item
@@ -103,6 +111,7 @@ class ACHeader extends Component {
         <Menu size="huge" pointing secondary>
           <Menu.Item
             as={NavLink}
+            className="white"
             to="/"
             name="home"
             exact
@@ -114,6 +123,7 @@ class ACHeader extends Component {
           </Menu.Item>
           <Menu.Item
             as={NavLink}
+            className="white"
             to="/cars"
             name="cars"
             style={{
@@ -125,6 +135,7 @@ class ACHeader extends Component {
           {isAuthenticated ? (
             <Menu.Item
               as={NavLink}
+              className="white"
               to="/history"
               name="history"
               style={{
@@ -134,10 +145,25 @@ class ACHeader extends Component {
               Orders
             </Menu.Item>
           ) : null}
-          <Menu.Item position="right">
-            <Button as={Link} to="/cart" icon="shop" color="blue" />
-            {isAuthenticated ? loggedin : guest}
-          </Menu.Item>
+          {isAuthenticated ? (
+            <Fragment>
+              <Menu.Item
+                as={NavLink}
+                className="white"
+                to="/cart/"
+                position="right"
+                style={{
+                  color: "white",
+                }}
+              >
+                <Icon name="shop" />
+                {cartCount ? "(" + cartCount + ")" : null}
+              </Menu.Item>
+              <Menu.Item>{loggedin}</Menu.Item>
+            </Fragment>
+          ) : (
+            <Menu.Item position="right">{guest}</Menu.Item>
+          )}
         </Menu>
       </Segment>
     );
@@ -146,8 +172,13 @@ class ACHeader extends Component {
 
 const mapStateToProps = (state) => ({
   auth: state.Auth,
+  cart: state.Cart,
 });
 
 export default withRouter(
-  connect(mapStateToProps, { getUser, logout })(ACHeader)
+  connect(mapStateToProps, {
+    getUser,
+    logout,
+    getCartList: CartModelAction.list,
+  })(ACHeader)
 );

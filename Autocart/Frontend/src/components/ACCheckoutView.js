@@ -26,6 +26,7 @@ class ACCheckoutView extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.order.id !== this.props.order.id) {
       this.setState({ finished: true });
+      this.props.getCartList(); //refresh cart list
     }
   }
 
@@ -40,6 +41,8 @@ class ACCheckoutView extends Component {
         obj.cars.push(item.id);
       }
     });
+    const finishedList = this.props.cart.list;
+    this.setState({ finishedList });
     this.props.addOrder(obj);
   };
 
@@ -197,6 +200,7 @@ class ACCheckoutView extends Component {
         price += item.price * item.amount;
       }
     });
+    if (this.state.finished) cart = this.state.finishedList;
     return (
       <Grid centered style={{ margin: "1em 0em 1em 0em" }}>
         <GridColumn
@@ -210,7 +214,6 @@ class ACCheckoutView extends Component {
               {cart.map((item) => this.itemComponent(item))}
             </Item.Group>
           </Segment>
-
           {this.state.finished
             ? this.renderFinished()
             : this.renderUnfinished(price)}

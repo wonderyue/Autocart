@@ -27,6 +27,7 @@ import ACDraggableCard from "./ACDraggableCard";
 import ACCommentListView from "./ACCommentListView";
 import { Carousel } from "react-responsive-carousel";
 import { CAR_URL } from "@src/constants";
+import { Link } from "react-router-dom";
 
 const leftColumn = {
   Horsepower: "horsepower",
@@ -51,7 +52,12 @@ const editModeColumn = {
 };
 
 class ACCarDetailView extends Component {
-  state = { editMode: false, removedImages: [], detailImages: [] };
+  state = {
+    editMode: false,
+    cartAdded: false,
+    removedImages: [],
+    detailImages: [],
+  };
 
   newId = 0;
 
@@ -83,6 +89,7 @@ class ACCarDetailView extends Component {
   }
 
   handleAddToCart = () => {
+    this.setState({ cartAdded: true });
     const carId = this.props.match.params.id;
     this.props.addToCart({ car: carId, saveForLater: false, amount: 1 });
   };
@@ -276,7 +283,6 @@ class ACCarDetailView extends Component {
 
   render() {
     const info = {
-      id: this.getStateOrProp("id"),
       name: this.getStateOrProp("name"),
       year: this.getStateOrProp("year"),
       model: this.getStateOrProp("model"),
@@ -411,14 +417,21 @@ class ACCarDetailView extends Component {
               </Grid>
               <Grid>
                 <Grid.Column style={{ margin: "2em" }}>
-                  <Button
-                    primary
-                    floated="right"
-                    onClick={this.handleAddToCart}
-                  >
-                    ADD TO CART
-                    <Icon name="right chevron" />
-                  </Button>
+                  {this.state.cartAdded ? (
+                    <Button primary as={Link} floated="right" to="/cart">
+                      CART
+                      <Icon name="right chevron" />
+                    </Button>
+                  ) : (
+                    <Button
+                      primary
+                      floated="right"
+                      onClick={this.handleAddToCart}
+                    >
+                      ADD TO CART
+                      <Icon name="right chevron" />
+                    </Button>
+                  )}
                   {editMode ? (
                     <Fragment>
                       <Button
@@ -441,7 +454,7 @@ class ACCarDetailView extends Component {
                   ) : null}
                 </Grid.Column>
               </Grid>
-              <ACCommentListView carid={info.id} />
+              <ACCommentListView carid={this.props.match.params.id} />
             </Segment>
           </Grid.Column>
           <Grid.Column width={2}></Grid.Column>

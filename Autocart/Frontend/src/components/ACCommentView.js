@@ -3,13 +3,11 @@ import { connect } from "react-redux";
 import { CommentModelAction } from "@src/actions";
 import {
   Segment,
-  Item,
   Grid,
   Form,
   GridColumn,
   Button,
   Divider,
-  ItemGroup,
   Rating,
   Header,
   Image,

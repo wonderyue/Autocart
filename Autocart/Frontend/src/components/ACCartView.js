@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { CartModelAction } from "@src/actions";
 import {
@@ -11,6 +11,7 @@ import {
   GridColumn,
   Label,
   Dropdown,
+  Header,
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import CurrencyFormat from "react-currency-format";
@@ -110,7 +111,18 @@ class ACCartView extends Component {
     );
   };
 
-  render() {
+  renderEmptyCart() {
+    return (
+      <Fragment>
+        <Header size="large">Your cart is empty</Header>
+        <Button as={Link} to="/cars/" primary>
+          EXPLORE CARS
+        </Button>
+      </Fragment>
+    );
+  }
+
+  renderCart() {
     let cart = [];
     let save = [];
     this.props.list.map((item) => {
@@ -122,28 +134,46 @@ class ACCartView extends Component {
         <GridColumn
           style={{ minWidth: "50em", maxWidth: "60em", padding: "1em 0em" }}
         >
-          <Grid.Row>
-            <Button as={Link} to="/checkout/" primary floated="right">
-              Check Out
-              <Icon name="right chevron" />
-            </Button>
-            <p className="header_big">Shopping Cart</p>
-          </Grid.Row>
-          <Divider />
-          <Segment>
-            <Item.Group divided>
-              {cart.map((item) => this.itemComponent(item))}
-            </Item.Group>
-          </Segment>
-          <p className="header_big">Save For Later</p>
-          <Divider />
-          <Segment>
-            <Item.Group divided>
-              {save.map((item) => this.itemComponent(item))}
-            </Item.Group>
-          </Segment>
+          {cart.length > 0 ? (
+            <Fragment>
+              <Grid.Row>
+                <Button as={Link} to="/checkout/" primary floated="right">
+                  Check Out
+                  <Icon name="right chevron" />
+                </Button>
+                <Header size="large">Shopping Cart</Header>
+              </Grid.Row>
+              <Divider />
+              <Segment>
+                <Item.Group divided>
+                  {cart.map((item) => this.itemComponent(item))}
+                </Item.Group>
+              </Segment>
+            </Fragment>
+          ) : null}
+          {save.length > 0 ? (
+            <Fragment>
+              <Header size="large">Save For Later</Header>
+              <Divider />
+              <Segment>
+                <Item.Group divided>
+                  {save.map((item) => this.itemComponent(item))}
+                </Item.Group>
+              </Segment>
+            </Fragment>
+          ) : null}
         </GridColumn>
       </Grid>
+    );
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.props.list.length > 0
+          ? this.renderCart()
+          : this.renderEmptyCart()}
+      </Fragment>
     );
   }
 }
