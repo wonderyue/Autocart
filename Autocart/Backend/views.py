@@ -5,7 +5,7 @@ from Backend.serializers import UserSerializer, LoginSerializer, CarSerializer, 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 import django_filters
-from Backend.utils import CommaSeparatedValueFilter, DestroyWithPayloadMixin, ListFilterByUserMixin, CreateByUserMixin
+from Backend.utils import CommaSeparatedValueFilter, DestroyWithPayloadMixin, ListFilterByUserMixin, ListFilterMixin, CreateByUserMixin
 from rest_framework_simplejwt.tokens import AccessToken
 
 
@@ -128,8 +128,12 @@ class OrderView(ListFilterByUserMixin, generics.ListCreateAPIView):
         return response.Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-class CommentView(CreateByUserMixin, generics.ListCreateAPIView):
+class CommentView(CreateByUserMixin, ListFilterMixin, generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [permissions.AllowAny]
     pagination_class = ListPagination
+
+    def custemFilter(self, queryset, request):
+        carid = request.GET.get("carid", None)
+        return Comment.objects.select_related("cart__car").filter(cart__car_id=carid)

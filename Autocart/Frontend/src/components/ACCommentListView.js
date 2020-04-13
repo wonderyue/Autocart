@@ -14,7 +14,9 @@ import Moment from "react-moment";
 
 class ACCommentListView extends Component {
   componentDidMount() {
-    this.props.getOnePage(true, this.props.countPerPage, this.props.curPage);
+    this.props.getOnePage(true, this.props.countPerPage, this.props.curPage, {
+      carid: this.props.carid,
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -22,7 +24,9 @@ class ACCommentListView extends Component {
       prevProps.curPage !== this.props.curPage ||
       prevProps.countPerPage !== this.props.countPerPage
     ) {
-      this.props.getOnePage(true, this.props.countPerPage, this.props.curPage);
+      this.props.getOnePage(true, this.props.countPerPage, this.props.curPage, {
+        carid: this.props.carid,
+      });
     }
   }
 

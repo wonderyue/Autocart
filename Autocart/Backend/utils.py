@@ -33,7 +33,7 @@ class ExtraFieldMixin(object):
             return expanded_fields
 
 
-class ListFilterByUserMixin:
+class ListFilterMixin(object):
     """
     List a queryset filter by request.user. 
     For permissions.IsAuthenticated 
@@ -41,7 +41,7 @@ class ListFilterByUserMixin:
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(
-            self.get_queryset().filter(user=self.request.user))
+            self.custemFilter(self.get_queryset(), request))
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -50,6 +50,16 @@ class ListFilterByUserMixin:
 
         serializer = self.get_serializer(queryset, many=True)
         return response.Response(serializer.data)
+
+
+class ListFilterByUserMixin(ListFilterMixin):
+    """
+    List a queryset filter by request.user. 
+    For permissions.IsAuthenticated 
+    """
+
+    def custemFilter(self, queryset, request):
+        return queryset.filter(user=self.request.user)
 
 
 class CreateByUserMixin:
