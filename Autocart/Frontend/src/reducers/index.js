@@ -33,4 +33,12 @@ export default combineReducers({
       ordering: "-createTime",
     },
   }),
+  Comment: ModelReducer("Comment"),
+  CommentList: Pagination("CommentList", {
+    count: 0,
+    list: [],
+    curPage: 1,
+    countPerPage: 10,
+    filters: {},
+  }),
 });

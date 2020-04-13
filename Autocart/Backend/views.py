@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from rest_framework import filters, generics, mixins, pagination, permissions, response, status, viewsets
-from Backend.models import User, Car, Cart, CarImage, Order
-from Backend.serializers import UserSerializer, LoginSerializer, CarSerializer, CartSerializer, CustomTokenRefreshSerializer, CarImageSerializer, OrderSerializer
+from Backend.models import User, Car, Cart, CarImage, Order, Comment
+from Backend.serializers import UserSerializer, LoginSerializer, CarSerializer, CartSerializer, CustomTokenRefreshSerializer, CarImageSerializer, OrderSerializer, CommentSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 import django_filters
@@ -126,3 +126,10 @@ class OrderView(ListFilterByUserMixin, generics.ListCreateAPIView):
 
         headers = self.get_success_headers(serializer.data)
         return response.Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class CommentView(CreateByUserMixin, generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.AllowAny]
+    pagination_class = ListPagination

@@ -8,6 +8,8 @@ import {
   Segment,
   Item,
   Button,
+  Modal,
+  Header,
 } from "semantic-ui-react";
 import CurrencyFormat from "react-currency-format";
 import { connect } from "react-redux";
@@ -15,6 +17,8 @@ import { Link } from "react-router-dom";
 import { OrderListAction } from "@src/actions";
 import { CHANGE_PAGE, CHANGE_ORDER } from "@src/constants";
 import { compareObject } from "@src/utils/util";
+import ACCommentView from "./ACCommentView";
+import Moment from "react-moment";
 
 const sortOptions = [
   {
@@ -70,19 +74,17 @@ class ACHistoryView extends Component {
         <Item.Content>
           <Item.Header as="a">{item.name}</Item.Header>
           <Item.Description>
-            <a className="header_big">
+            <Header size="medium">
               <CurrencyFormat
                 value={item.price * item.amount}
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix="Total: $"
               />
-            </a>
+            </Header>
           </Item.Description>
           <Item.Extra>
-            <p style={{ fontSize: "1.2em", color: "black" }}>
-              Qty: {item.amount}
-            </p>
+            <Header size="small">Qty: {item.amount}</Header>
             <Button
               as={Link}
               to={`cars/${item.car}`}
@@ -94,10 +96,16 @@ class ACHistoryView extends Component {
               <Icon name="right chevron" />
             </Button>
             {item.commented ? null : (
-              <Button floated="right" size="medium">
-                <Icon name="comment alternate" />
-                Write Review
-              </Button>
+              <Modal
+                trigger={
+                  <Button floated="right" size="medium">
+                    <Icon name="comment alternate" />
+                    Write a Review
+                  </Button>
+                }
+              >
+                <ACCommentView item={item} />
+              </Modal>
             )}
           </Item.Extra>
         </Item.Content>
@@ -136,25 +144,31 @@ class ACHistoryView extends Component {
                 <Grid columns={2}>
                   <Grid.Row>
                     <Grid.Column>
-                      <a style={{ color: "white" }}>
+                      <Header inverted size="medium" textAlign="left">
                         ORDER PLACED:{" "}
-                        {new Date(order.time * 1000).toLocaleString()}
-                      </a>
+                        {
+                          <Moment local format="LLL">
+                            {order.createTime}
+                          </Moment>
+                        }
+                      </Header>
                     </Grid.Column>
                     <Grid.Column>
-                      <a style={{ color: "white" }}>ORDER#: {order.id}</a>
+                      <Header inverted size="medium" textAlign="right">
+                        ORDER#: {order.id}
+                      </Header>
                     </Grid.Column>
                   </Grid.Row>
                   <Grid.Row>
                     <Grid.Column>
-                      <a style={{ color: "white" }}>
+                      <Header inverted size="small" textAlign="left">
                         PAID: {order.paid ? "Yes" : "No"}
-                      </a>
+                      </Header>
                     </Grid.Column>
                     <Grid.Column>
-                      <a style={{ color: "white" }}>
+                      <Header inverted size="small" textAlign="right">
                         PICKED UP: {order.pickedUp ? "Yes" : "No"}
-                      </a>
+                      </Header>
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>
@@ -167,7 +181,7 @@ class ACHistoryView extends Component {
             </Fragment>
           ))}
           <Divider />
-          <Grid className="center aligned">
+          <Grid centered>
             <Pagination
               activePage={this.props.curPage}
               totalPages={this.props.count / this.props.countPerPage}

@@ -3,6 +3,7 @@ export const MEDIA_URL = "/media/";
 export const CAR_URL = "/cars/";
 export const CART_URL = "/carts/";
 export const ORDER_URL = "/orders/";
+export const COMMENT_URL = "/comments/";
 export const ACCESS_TOKEN = "AC_ACCESS_TOKEN";
 export const REFRESH_TOKEN = "AC_REFRESH_TOKEN";
 export const ACCESS_EXPIRE = "AC_ACCESS_EXPIRE";

@@ -11,7 +11,7 @@ const PaginationAction = (prefix, url) => ({
     };
   },
 
-  getOnePage: (withToken, countPerPage, curPage, filters) => {
+  getOnePage: (withToken, countPerPage, curPage, filters = {}) => {
     let fun = (dispatch, getState) => {
       const offset = countPerPage * (curPage - 1);
       const request = withToken ? clientRequestWithToken : clientRequest;

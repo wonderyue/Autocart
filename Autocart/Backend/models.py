@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class User(AbstractUser):
@@ -95,6 +96,21 @@ class Cart(models.Model):
 
     def __str__(self):
         return '{}_{}_{}'.format(self.id, self.user.username, self.car.id)
+
+    class Meta:
+        ordering = ['createTime']
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    cart = models.OneToOneField(Cart, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=5, validators=[
+                                 MaxValueValidator(5), MinValueValidator(1)])
+    comment = models.TextField(max_length=1024, blank=True)
+    createTime = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{}_{}_{}'.format(self.id, self.user.username, self.cart.id)
 
     class Meta:
         ordering = ['createTime']

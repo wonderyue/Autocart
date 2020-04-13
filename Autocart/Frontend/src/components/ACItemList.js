@@ -42,7 +42,7 @@ class ACItemList extends Component {
                     />
                     <p>Customer Rating</p>
                     <Rating
-                      defaultRating={item.customerRating}
+                      defaultRating={item.customerRating.rating}
                       maxRating={5}
                       disabled
                     />

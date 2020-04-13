@@ -24,6 +24,7 @@ import {
 import { CartModelAction } from "@src/actions";
 import CurrencyFormat from "react-currency-format";
 import ACDraggableCard from "./ACDraggableCard";
+import ACCommentListView from "./ACCommentListView";
 import { Carousel } from "react-responsive-carousel";
 import { CAR_URL } from "@src/constants";
 
@@ -374,8 +375,18 @@ class ACCarDetailView extends Component {
                       this.handleChangeInfo("expertRating", d.rating)
                     }
                   />
-                  <p>Customer Rating</p>
-                  <Rating rating={info.customerRating} maxRating={5} disabled />
+                  <p>
+                    Customer Rating (
+                    {info.customerRating ? info.customerRating.count : 0}{" "}
+                    ratings)
+                  </p>
+                  <Rating
+                    rating={
+                      info.customerRating ? info.customerRating.rating : 0
+                    }
+                    maxRating={5}
+                    disabled
+                  />
                   {editMode ? (
                     <Segment>
                       {this.renderImageUploader(
@@ -398,26 +409,39 @@ class ACCarDetailView extends Component {
                   {this.renderInfoColumn(rightColumn, info, editMode)}
                 </Grid.Column>
               </Grid>
-              <Button primary floated="right" onClick={this.handleAddToCart}>
-                ADD TO CART
-                <Icon name="right chevron" />
-              </Button>
-              {editMode ? (
-                <Fragment>
+              <Grid>
+                <Grid.Column style={{ margin: "2em" }}>
                   <Button
-                    secondary
+                    primary
                     floated="right"
-                    onClick={this.handleUpdateCar}
+                    onClick={this.handleAddToCart}
                   >
-                    UPDATE CAR INFO
+                    ADD TO CART
                     <Icon name="right chevron" />
                   </Button>
-                  <Button secondary floated="right" onClick={this.handleAddCar}>
-                    COPY AS NEW CAR
-                    <Icon name="right chevron" />
-                  </Button>
-                </Fragment>
-              ) : null}
+                  {editMode ? (
+                    <Fragment>
+                      <Button
+                        secondary
+                        floated="right"
+                        onClick={this.handleUpdateCar}
+                      >
+                        UPDATE CAR INFO
+                        <Icon name="right chevron" />
+                      </Button>
+                      <Button
+                        secondary
+                        floated="right"
+                        onClick={this.handleAddCar}
+                      >
+                        COPY AS NEW CAR
+                        <Icon name="right chevron" />
+                      </Button>
+                    </Fragment>
+                  ) : null}
+                </Grid.Column>
+              </Grid>
+              <ACCommentListView carid={info.id} />
             </Segment>
           </Grid.Column>
           <Grid.Column width={2}></Grid.Column>

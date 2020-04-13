@@ -1,12 +1,13 @@
 from rest_framework import serializers
 from django.contrib.auth import password_validation
-from Backend.models import User, Car, Cart, CarImage, Order
+from Backend.models import User, Car, Cart, CarImage, Order, Comment
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from Backend.utils import ExtraFieldMixin
-import time
+from django.contrib.auth.hashers import make_password
+from django.db.models import Avg
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,7 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def validate_password(self, value):
         password_validation.validate_password(value, self.instance)
-        return value
+        return make_password(value)
 
     def create(self, validated_data):
         user = super().create(validated_data)
@@ -73,10 +74,23 @@ class CustomTokenRefreshSerializer(TokenRefreshSerializer):
         return data
 
 
-class CarSerializer(serializers.ModelSerializer):
+class CarSerializer(ExtraFieldMixin, serializers.ModelSerializer):
+    customerRating = serializers.SerializerMethodField(read_only=True)
+
+    def get_customerRating(self, obj):
+        '''WHERE Comment.cart.car.id = self.id'''
+        queryset = Comment.objects.select_related("cart__car").filter(
+            cart__car_id=obj.id)
+        res = {}
+        res['count'] = queryset.count()
+        res['rating'] = round(queryset.aggregate(
+            Avg('rating'))['rating__avg'], 2) if res['count'] > 0 else 3
+        return res
+
     class Meta:
         model = Car
         fields = ('__all__')
+        extra_fields = ['customerRating']
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -97,7 +111,11 @@ class CartSerializer(serializers.ModelSerializer):
         return obj.car.price
 
     def get_commented(self, obj):
-        return False
+        try:
+            Comment.objects.get(cart=obj.id)
+        except Comment.DoesNotExist:
+            return False
+        return True
 
     class Meta:
         model = Cart
@@ -113,13 +131,24 @@ class CarImageSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(ExtraFieldMixin, serializers.ModelSerializer):
     cars = CartSerializer(many=True, read_only=True)
-    time = serializers.SerializerMethodField(read_only=True)
-
-    def get_time(self, obj):
-        timetuple = obj.createTime.timetuple()
-        return time.mktime(timetuple)
 
     class Meta:
         model = Order
-        exclude = ['createTime']
-        extra_fields = ['cars', 'time']
+        fields = ('__all__')
+        extra_fields = ['cars']
+
+
+class CommentSerializer(ExtraFieldMixin, serializers.ModelSerializer):
+    name = serializers.SerializerMethodField(read_only=True)
+    img = serializers.SerializerMethodField(read_only=True)
+
+    def get_name(self, obj):
+        return obj.user.username
+
+    def get_img(self, obj):
+        return obj.user.img
+
+    class Meta:
+        model = Comment
+        fields = ('__all__')
+        extra_fields = ['name', 'img']

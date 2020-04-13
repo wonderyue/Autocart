@@ -287,7 +287,7 @@ class ACCarListView extends Component {
           <Divider />
           <ACItemList list={this.props.list} />
           <Divider />
-          <Grid className="center aligned">
+          <Grid centered>
             <Pagination
               activePage={this.props.curPage}
               totalPages={this.props.count / this.props.countPerPage}
