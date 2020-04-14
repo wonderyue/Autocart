@@ -67,10 +67,21 @@ class ACSignuoView extends Component {
     }
 
     return (
-      <Grid textAlign="center" style={{ margin: "5em" }} verticalAlign="middle">
+      <Grid
+        textAlign="center"
+        style={{ margin: "0em 5em 5em" }}
+        verticalAlign="middle"
+      >
         <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h2" color="blue" textAlign="center">
-            <Image src={MEDIA_URL + "icon.png"} /> SIGN UP
+          <Image src={MEDIA_URL + "icon.png"} size="medium" centered />
+          <Header
+            as="a"
+            size="large"
+            color="blue"
+            textAlign="center"
+            style={{ margin: "1em" }}
+          >
+            SIGN UP
           </Header>
           <Form size="large" onSubmit={this.handleSubmit}>
             <Segment>

@@ -109,6 +109,13 @@ class ACHeader extends Component {
     return (
       <Segment inverted color="blue">
         <Menu size="huge" pointing secondary>
+          <Menu.Item>
+            <Image
+              src={MEDIA_URL + "header.png"}
+              size="medium"
+              style={{ margin: "-1.5em 0em -1em -1.2em" }}
+            />
+          </Menu.Item>
           <Menu.Item
             as={NavLink}
             className="white"
