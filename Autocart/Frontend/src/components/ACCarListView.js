@@ -22,6 +22,7 @@ import {
   CHANGE_ENABLE,
 } from "@src/constants";
 import { compareObject } from "@src/utils/util";
+import ScrollToTop from "./ScrollToTop";
 
 const sortOptions = [
   {
@@ -297,6 +298,7 @@ class ACCarListView extends Component {
             />
           </Grid>
         </Grid.Column>
+        <ScrollToTop />
       </Grid>
     );
   }

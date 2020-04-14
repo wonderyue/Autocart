@@ -59,3 +59,11 @@ body ::-webkit-scrollbar-thumb {
   border-color: white;
   color: white;
 }
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1rem;
+  animation: fadeIn 500ms ease-in-out 1s both;
+  cursor: pointer;
+}
