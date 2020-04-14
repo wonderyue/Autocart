@@ -8,6 +8,7 @@ import ACCarDetailView from "./ACCarDetailView";
 import ACCartView from "./ACCartView";
 import ACHistoryView from "./ACHistoryView";
 import ACCheckoutView from "./ACCheckoutView";
+import ACAboutView from "./ACAboutView";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/cart" component={ACCartView} />
           <Route exact path="/checkout" component={ACCheckoutView} />
           <Route exact path="/history" component={ACHistoryView} />
+          <Route exact path="/about" component={ACAboutView} />
           <Route path="/cars/:id" component={ACCarDetailView} />
         </Switch>
       </Segment>

@@ -152,6 +152,17 @@ class ACHeader extends Component {
               Orders
             </Menu.Item>
           ) : null}
+          <Menu.Item
+            as={NavLink}
+            className="white"
+            to="/about"
+            name="about"
+            style={{
+              color: "white",
+            }}
+          >
+            About
+          </Menu.Item>
           {isAuthenticated ? (
             <Fragment>
               <Menu.Item
