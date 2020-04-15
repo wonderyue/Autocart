@@ -12,6 +12,7 @@ django-filter = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
 drf-writable-nested = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.8"

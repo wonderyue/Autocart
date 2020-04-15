@@ -41,11 +41,13 @@ INSTALLED_APPS = [
     # custom begin
     'rest_framework',
     'django_filters',
+    'corsheaders',
     'Backend',
     'Frontend',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -166,3 +168,5 @@ SIMPLE_JWT = {
 X_FRAME_OPTIONS = 'ALLOWALL'
 
 XS_SHARING_ALLOWED_METHODS = ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE']
+
+CORS_ORIGIN_ALLOW_ALL = True
