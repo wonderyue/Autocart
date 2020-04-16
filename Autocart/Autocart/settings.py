@@ -24,9 +24,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = 'e&_&!!+(ypy--@k5bjwnbazc)3e=wt75tdq@7^tc-t(it&=w*q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -126,6 +126,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = 'static'
+REACT_APP_DIR = os.path.join(BASE_DIR, 'Frontend')
+STATICFILES_DIRS = [
+    os.path.join(REACT_APP_DIR, 'static', 'frontend'),
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],

@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:8000";
+export const BASE_URL = "https://autocart.rj.r.appspot.com/";
 export const MEDIA_URL = "/media/";
 export const CAR_URL = "/cars/";
 export const CART_URL = "/carts/";
