@@ -422,7 +422,7 @@ class ACCarDetailView extends Component {
                       CART
                       <Icon name="right chevron" />
                     </Button>
-                  ) : (
+                  ) : this.props.isAuthenticated ? (
                     <Button
                       primary
                       floated="right"
@@ -431,7 +431,7 @@ class ACCarDetailView extends Component {
                       ADD TO CART
                       <Icon name="right chevron" />
                     </Button>
-                  )}
+                  ) : null}
                   {editMode ? (
                     <Fragment>
                       <Button
@@ -468,6 +468,7 @@ const mapStateToProps = (state) => {
   return {
     car: state.Car,
     isStaff: state.Auth.isStaff,
+    isAuthenticated: state.Auth.isAuthenticated,
   };
 };
 

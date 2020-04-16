@@ -10,13 +10,14 @@ export default class ScrollToTop extends Component {
   }
 
   componentDidMount() {
-    var scrollComponent = this;
-    document.addEventListener("scroll", function (e) {
-      scrollComponent.toggleVisibility();
-    });
+    document.addEventListener("scroll", this.toggleVisibility);
   }
 
-  toggleVisibility() {
+  componentWillUnmount() {
+    document.removeEventListener("scroll", this.toggleVisibility);
+  }
+
+  toggleVisibility = () => {
     if (window.pageYOffset > 300) {
       this.setState({
         is_visible: true,
@@ -26,7 +27,7 @@ export default class ScrollToTop extends Component {
         is_visible: false,
       });
     }
-  }
+  };
 
   scrollToTop() {
     window.scrollTo({

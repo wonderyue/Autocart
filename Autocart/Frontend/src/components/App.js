@@ -22,6 +22,7 @@ import {
 } from "react-router-dom";
 import { Segment } from "semantic-ui-react";
 import { requestMiddleware } from "@src/middleware/requestMiddleware";
+import PrivateRouter from "./PrivateRouter";
 
 const initialState = {};
 
@@ -43,9 +44,9 @@ function App() {
         <Switch location={background || location}>
           <Route exact path="/" component={ACHomeView} />
           <Route exact path="/cars" component={ACCarListView} />
-          <Route exact path="/cart" component={ACCartView} />
-          <Route exact path="/checkout" component={ACCheckoutView} />
-          <Route exact path="/history" component={ACHistoryView} />
+          <PrivateRouter exact path="/cart" component={ACCartView} />
+          <PrivateRouter exact path="/checkout" component={ACCheckoutView} />
+          <PrivateRouter exact path="/history" component={ACHistoryView} />
           <Route exact path="/about" component={ACAboutView} />
           <Route path="/cars/:id" component={ACCarDetailView} />
         </Switch>
