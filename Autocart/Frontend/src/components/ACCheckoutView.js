@@ -36,14 +36,16 @@ class ACCheckoutView extends Component {
     var obj = {};
     formData.forEach((value, key) => (obj[key] = value));
     obj["cars"] = [];
+    let finishedList = [];
     this.props.cart.list.map((item) => {
       if (!item.saveForLater) {
         obj.cars.push(item.id);
+        finishedList.push(item);
       }
     });
-    const finishedList = this.props.cart.list;
     this.setState({ finishedList });
     this.props.addOrder(obj);
+    window.scroll({ top: 0, left: 0 /*behavior: 'smooth'*/ });
   };
 
   itemComponent = (item) => {

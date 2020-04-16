@@ -37,6 +37,9 @@ class ACHomeView extends Component {
               style={{ marginTop: "5em" }}
               as={Link}
               to="/cars/"
+              onClick={() => {
+                window.scroll({ top: 0, left: 0 /*behavior: 'smooth'*/ });
+              }}
             >
               Find your next car
             </Button>
