@@ -1,5 +1,46 @@
 # Autocart
 
+
+## Description
+
+An ecommerce website with Django and React. 
+
+### Tech Stack
+
+- front-end
+	- React
+	- Redux
+	- Router
+	- Axios
+	- Semantic Ui	
+	- Webpack
+
+- back-end
+	- Django
+	- REST framework
+	- JWT
+	
+- storage
+	- SQLite(master)
+	- MySQL(mysql branch)
+
+- deployment
+	- Google Cloud
+
+### Features
+
+- authentication
+- product list
+- cart
+- order history
+- rating and comment
+- edit mode for administrator 
+
+
+## Demo
+
+[demo](https://autocart.rj.r.appspot.com/) on Google Cloud
+
 ## How to run
 
 ```
@@ -26,3 +67,5 @@ python Autocart/manage.py runserver
 # run webpack for dev, 'npm run build' for production
 npm run dev
 ```
+
+## 
