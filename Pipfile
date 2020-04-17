@@ -13,6 +13,9 @@ djangorestframework-simplejwt = "*"
 pillow = "*"
 drf-writable-nested = "*"
 django-cors-headers = "*"
+mysqlclient = "*"
+cryptography = "*"
+pymysql = "*"
 
 [requires]
 python_version = "3.8"
