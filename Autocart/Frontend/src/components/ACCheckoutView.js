@@ -176,7 +176,7 @@ class ACCheckoutView extends Component {
       <Fragment>
         <Divider />
         <p className="header_big" style={{ margin: "2em 0em 1em" }}>
-          Success, Your order has been palced.
+          Success, Your order has been placed.
         </p>
         <p>we will contact you to schedule a pick up day.</p>
         <Button
