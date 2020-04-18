@@ -18,7 +18,7 @@ class PrivateRoute extends Component {
       prevProps.isAuthenticated !== this.props.isAuthenticated &&
       this.props.isAuthenticated == false
     ) {
-      history.push("/");
+      this.props.history.push("/");
     }
   }
 
