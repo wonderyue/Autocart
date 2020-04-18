@@ -17,7 +17,7 @@ const PaginationAction = (prefix, url) => ({
       const request = withToken ? clientRequestWithToken : clientRequest;
       let param = "";
       Object.keys(filters).map((key, index) => {
-        param += `&${key}=${filters[key]}`;
+        if (filters[key] != undefined) param += `&${key}=${filters[key]}`;
       });
       request({
         method: "get",

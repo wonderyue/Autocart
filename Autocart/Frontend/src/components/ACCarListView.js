@@ -214,6 +214,7 @@ class ACCarListView extends Component {
               onBlur={this.handleMinPriceChange}
               type="number"
               style={{ maxWidth: "8em" }}
+              defaultValue={this.props.filters.price__gte}
             />{" "}
             to{" "}
             <Input
@@ -223,6 +224,7 @@ class ACCarListView extends Component {
               onBlur={this.handleMaxPriceChange}
               type="number"
               style={{ maxWidth: "8em" }}
+              defaultValue={this.props.filters.price__lte}
             />
             <Divider />
             <p>Make</p>
@@ -267,6 +269,7 @@ class ACCarListView extends Component {
                   this.setState({ search: e.target.value });
                 }}
                 onBlur={this.handleSearchChange}
+                defaultValue={this.props.filters.search}
               />
             </Grid.Column>
             <Grid.Column textAlign="center" verticalAlign="middle">
