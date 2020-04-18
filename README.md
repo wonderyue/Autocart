@@ -22,7 +22,7 @@ An ecommerce website with Django and React.
 	
 - storage
 	- SQLite(master)
-	- MySQL(mysql branch)
+	- MySQL(gcloud branch)
 
 - deployment
 	- Google Cloud
