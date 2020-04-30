@@ -36,7 +36,7 @@ export const updateCar = (id, obj) =>
     }
     clientRequestWithToken({
       method: "patch",
-      url: `/cars/${id}`,
+      url: `/cars/${id}/`,
       data: formData,
     }).then((res) => {
       dispatch({
