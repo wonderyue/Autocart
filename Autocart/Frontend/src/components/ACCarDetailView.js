@@ -101,7 +101,7 @@ class ACCarDetailView extends Component {
       img: this.state.coverImg,
     });
 
-    this.state.detailImages.map((item, index) => {
+    this.getDetailImages().map((item, index) => {
       const key = "detailImg_" + item.id;
       if (item.id > 0) {
         let obj = {};
