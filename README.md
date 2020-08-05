@@ -39,7 +39,7 @@ An ecommerce website with Django and React.
 
 ## Demo
 
-[demo](https://autocart.rj.r.appspot.com/) on Google Cloud
+[demo](https://auto-cart.herokuapp.com/) on Heroku
 
 ## How to run
 
@@ -62,7 +62,7 @@ cd Autocart
 python manage.py loaddata db.json
 
 # run serve on localhost:8000
-python Autocart/manage.py runserver
+python manage.py runserver
 
 # run webpack for dev, 'npm run build' for production
 npm run dev
