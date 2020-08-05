@@ -4,8 +4,8 @@
   "description": "Autocart",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development ./Autocart/Frontend/src/index.js --output ./Autocart/Frontend/static/frontend/main.js",
-    "build": "webpack --mode production ./Autocart/Frontend/src/index.js --output ./Autocart/Frontend/static/frontend/main.js"
+    "dev": "webpack --mode development ./Frontend/src/index.js --output ./Frontend/static/frontend/main.js",
+    "build": "webpack --mode production ./Frontend/src/index.js --output ./Frontend/static/frontend/main.js"
   },
   "repository": {
     "type": "git",

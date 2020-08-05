@@ -1,5 +1,5 @@
 node_modules
-Autocart/Frontend/static
+Frontend/static
 
 # Django #
 *.log

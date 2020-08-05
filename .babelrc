@@ -8,7 +8,7 @@
         "paths": [
           {
             "rootPathPrefix": "@src",
-            "rootPathSuffix": "Autocart/Frontend/src"
+            "rootPathSuffix": "Frontend/src"
           }
         ]
       }
