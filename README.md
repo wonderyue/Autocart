@@ -25,6 +25,7 @@ An ecommerce website with Django and React.
 	- MySQL(gcloud branch)
 
 - deployment
+	- Heroku
 	- Google Cloud
 
 ### Features
