@@ -22,6 +22,7 @@ An ecommerce website with Django and React.
 	
 - storage
 	- SQLite(master)
+	- PostgreSQL(heroku branch)
 	- MySQL(gcloud branch)
 
 - deployment
@@ -59,7 +60,6 @@ pipenv install
 npm install
 
 # loaddata
-cd Autocart
 python manage.py loaddata db.json
 
 # run serve on localhost:8000
