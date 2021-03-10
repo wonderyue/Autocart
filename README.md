@@ -69,4 +69,10 @@ python manage.py runserver
 npm run dev
 ```
 
-## 
+## Screenshots
+
+<img src="screenshot0.png" alt="screenshot0" style="zoom:25%;" />
+
+<img src="screenshot1.png" alt="screenshot1" style="zoom:25%;" />
+
+<img src="screenshot2.png" alt="screenshot2" style="zoom:25%;" />
