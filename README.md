@@ -22,9 +22,11 @@ An ecommerce website with Django and React.
 	
 - storage
 	- SQLite(master)
+	- PostgreSQL(heroku branch)
 	- MySQL(gcloud branch)
 
 - deployment
+	- Heroku
 	- Google Cloud
 
 ### Features
@@ -39,7 +41,7 @@ An ecommerce website with Django and React.
 
 ## Demo
 
-[demo](https://autocart.rj.r.appspot.com/) on Google Cloud
+[demo](https://auto-cart.herokuapp.com/) on Heroku
 
 ## How to run
 
@@ -58,20 +60,13 @@ pipenv install
 npm install
 
 # loaddata
-cd Autocart
 python manage.py loaddata db.json
 
 # run serve on localhost:8000
-python Autocart/manage.py runserver
+python manage.py runserver
 
 # run webpack for dev, 'npm run build' for production
 npm run dev
 ```
 
-## Screenshots
-
-<img src="screenshot0.png" alt="screenshot0" style="zoom:25%;" />
-
-<img src="screenshot1.png" alt="screenshot1" style="zoom: 25%;" />
-
-<img src="screenshot2.png" alt="screenshot2" style="zoom:25%;" />
+## 
